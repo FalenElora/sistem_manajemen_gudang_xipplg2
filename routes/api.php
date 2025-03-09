@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
+
+Route::apiResource('categories', KategoriController::class);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
