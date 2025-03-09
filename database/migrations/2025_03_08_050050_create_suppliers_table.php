@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+                $table->string(column: 'nama_supplier');
+                $table->string(column: 'kontak_supplier');
+                $table->string(column: 'alamat');
             $table->timestamps();
         });
     }
