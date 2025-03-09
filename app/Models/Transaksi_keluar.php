@@ -7,7 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi_keluar extends Model
 {
-   
+    use HasFactory;
+    protected $fillable = [
+        'barang_id',
+        'supplier_id',
+        'tanggal',
+        'jumlah',
+        'harga_jual',
+    ];
+    public function barang(): BelongsTo
+    {
+        return $this->belongsTo(Barang::class, 'barang_id');
+    }
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
 
     
 }
