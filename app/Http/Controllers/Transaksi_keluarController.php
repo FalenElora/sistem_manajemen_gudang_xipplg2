@@ -9,121 +9,48 @@ class Transaksi_keluarController extends Controller
 {
     public function index()
     {
-        $transaksi_keluars = Transaksi_keluar::all();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi keluar retrieved successfully.',
-            'data' => $transaksi_keluars
-        ], 200);
+        $transaksiKeluar = Transaksi_keluar::with('barang', 'pelanggan')->get();
+        return response()->json($transaksiKeluar);
     }
 
-    // Menambahkan transaksi keluar baru dan mengurangi stok barang
+    /**
+     * Menyimpan transaksi keluar baru dan mengurangi stok barang.
+     */
     public function store(Request $request)
     {
         $request->validate([
             'barang_id' => 'required|exists:barangs,id',
-            'supplier_id' => 'required|exists:suppliers,id',
+            'pelanggan_id' => 'required|exists:pelanggans,id',
             'tanggal' => 'required|date',
             'jumlah' => 'required|integer|min:1',
-            'harga_jual' => 'required|integer|min:0'
+            'harga_jual' => 'required|integer|min:1',
         ]);
 
+        // Cari barang
         $barang = Barang::find($request->barang_id);
-
-        // Pastikan stok barang cukup
-        if ($barang->jumlah < $request->jumlah) {
+        
+        if (!$barang || $barang->jumlah < $request->jumlah) {
             return response()->json([
-                'status' => 400,
-                'message' => 'Stok barang tidak mencukupi.',
-                'data' => null
+                'message' => 'Stok barang tidak mencukupi atau barang tidak ditemukan.'
             ], 400);
         }
 
-        // Kurangi stok barang
-        $barang->jumlah -= $request->jumlah;
-        $barang->save();
-
         // Simpan transaksi keluar
-        $transaksiKeluar = Transaksi_keluar::create($request->all());
-
-        return response()->json([
-            'status' => 201,
-            'message' => 'Transaksi keluar berhasil dibuat.',
-            'data' => $transaksiKeluar
-        ], 201);
-    }
-
-    // Menampilkan transaksi keluar berdasarkan ID
-    public function show($id)
-    {
-        $transaksiKeluar = Transaksi_keluar::find($id);
-
-        if (!$transaksiKeluar) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi keluar tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi keluar retrieved successfully.',
-            'data' => $transaksiKeluar
-        ], 200);
-    }
-
-    // Mengupdate transaksi keluar berdasarkan ID
-    public function update(Request $request, $id)
-    {
-        $transaksiKeluar = Transaksi_keluar::find($id);
-
-        if (!$transaksiKeluar) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi keluar tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
-        $request->validate([
-            'barang_id' => 'exists:barangs,id',
-            'supplier_id' => 'exists:suppliers,id',
-            'tanggal' => 'date',
-            'jumlah' => 'integer|min:1',
-            'harga_jual' => 'integer|min:0'
+        $transaksi = Transaksi_keluar::create([
+            'barang_id' => $request->barang_id,
+            'pelanggan_id' => $request->pelanggan_id,
+            'tanggal' => $request->tanggal,
+            'jumlah' => $request->jumlah,
+            'harga_jual' => $request->harga_jual,
         ]);
 
-        $transaksiKeluar->update($request->all());
+        // Kurangi stok barang
+        $barang->decrement('jumlah', $request->jumlah);
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi keluar berhasil diperbarui.',
-            'data' => $transaksiKeluar
-        ], 200);
+            'message' => 'Transaksi keluar berhasil ditambahkan dan stok barang dikurangi.',
+            'transaksi' => $transaksi,
+            'barang' => $barang
+        ]);
     }
-
-    // Menghapus transaksi keluar berdasarkan ID
-    public function destroy($id)
-    {
-        $transaksiKeluar = Transaksi_keluar::find($id);
-
-        if (!$transaksiKeluar) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi keluar tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
-        $transaksiKeluar->delete();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi keluar berhasil dihapus.',
-            'data' => null
-        ], 200);
-    
-}
 }

@@ -12,111 +12,42 @@ class Transaksi_masukController extends Controller
 {
     public function index()
     {
-        $transaksiMasuks = Transaksi_masuk::with('barang', 'supplier')->get();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Data transaksi masuk berhasil diambil.',
-            'data' => $transaksiMasuks
-        ], 200);
+        $transaksiMasuk = Transaksi_masuk::with(['barang', 'supplier'])->get();
+        return response()->json($transaksiMasuk);
     }
 
-    
+    /**
+     * Menyimpan transaksi masuk baru dan menambahkan stok barang.
+     */
     public function store(Request $request)
-{
-    $request->validate([
-        'barang_id' => 'required|exists:barangs,id',
-        'supplier_id' => 'required|exists:suppliers,id',
-        'tanggal' => 'required|date',
-        'jumlah' => 'required|integer|min:1',
-        'harga_beli' => 'required|integer|min:1',
-    ]);
-
-    
-    $transaksi = Transaksi_masuk::create($request->all());
-
-    
-    $barang = Barang::find($request->barang_id);
-    $barang->jumlah += $request->jumlah; 
-    $barang->save();
-
-    return response()->json([
-        'status' => 201,
-        'message' => 'Transaksi masuk berhasil.',
-        'data' => $transaksi
-    ], 201);
-}
-
-
-    
-    public function show($id)
     {
-        $transaksiMasuk = Transaksi_masuk::with('barang', 'supplier')->find($id);
-
-        if (!$transaksiMasuk) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi masuk tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Data transaksi masuk berhasil diambil.',
-            'data' => $transaksiMasuk
-        ], 200);
-    }
-
-    
-    public function update(Request $request, $id)
-    {
-        $transaksiMasuk = Transaksi_masuk::find($id);
-
-        if (!$transaksiMasuk) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi masuk tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
         $request->validate([
-            'barang_id' => 'exists:barangs,id',
-            'supplier_id' => 'exists:suppliers,id',
-            'tanggal' => 'date',
-            'jumlah' => 'integer|min:1',
-            'harga_beli' => 'integer|min:0'
+            'barang_id' => 'required|exists:barangs,id',
+            'supplier_id' => 'required|exists:suppliers,id',
+            'tanggal' => 'required|date',
+            'jumlah' => 'required|integer|min:1',
+            'harga_beli' => 'required|integer|min:1',
         ]);
 
-        $transaksiMasuk->update($request->all());
+        // Simpan transaksi masuk
+        $transaksi = Transaksi_masuk::create([
+            'barang_id' => $request->barang_id,
+            'supplier_id' => $request->supplier_id,
+            'tanggal' => $request->tanggal,
+            'jumlah' => $request->jumlah,
+            'harga_beli' => $request->harga_beli,
+        ]);
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi masuk berhasil diperbarui.',
-            'data' => $transaksiMasuk
-        ], 200);
-    }
-
-    
-    public function destroy($id)
-    {
-        $transaksiMasuk = Transaksi_masuk::find($id);
-
-        if (!$transaksiMasuk) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi masuk tidak ditemukan.',
-                'data' => null
-            ], 404);
+        // Tambah stok barang
+        $barang = Barang::find($request->barang_id);
+        if ($barang) {
+            $barang->increment('jumlah', $request->jumlah); // Menambah stok barang
         }
 
-        $transaksiMasuk->delete();
-
         return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi masuk berhasil dihapus.',
-            'data' => null
-        ], 200);
+            'message' => 'Transaksi masuk berhasil ditambahkan dan stok barang diperbarui.',
+            'transaksi' => $transaksi,
+            'barang' => $barang
+        ]);
     }
 }

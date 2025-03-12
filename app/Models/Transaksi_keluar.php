@@ -10,7 +10,7 @@ class Transaksi_keluar extends Model
     use HasFactory;
     protected $fillable = [
         'barang_id',
-        'supplier_id',
+        'pelanggan_id',
         'tanggal',
         'jumlah',
         'harga_jual',
@@ -19,9 +19,9 @@ class Transaksi_keluar extends Model
     {
         return $this->belongsTo(Barang::class, 'barang_id');
     }
-    public function supplier(): BelongsTo
+    public function pelanggan(): BelongsTo
     {
-        return $this->belongsTo(Supplier::class, 'supplier_id');
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
     }
 
     

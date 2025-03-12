@@ -19,9 +19,11 @@ class KategoriController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|string|max:255']);
+        $validated = $request->validate(['nama' => 'required|string|max:255']);
 
-        $category = Kategori ::create($request->all());
+        $category = Kategori ::create([
+            "nama" =>  $validated['nama'] 
+        ]);
 
         return response()->json([
             'status' => 201,
