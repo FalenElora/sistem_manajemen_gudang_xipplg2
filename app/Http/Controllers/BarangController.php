@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Barang;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -22,10 +23,20 @@ class BarangController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'kategori_id' => 'required|exists:kategoris,id',
+            'kategori_id' => 'required|integer',
             'harga' => 'required|integer|min:0',
             'jumlah' => 'required|integer|min:0',
         ]);
+
+        // Cek apakah kategori tersedia
+        $kategori = Kategori::find($request->kategori_id);
+        if (!$kategori) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Kategori tidak ditemukan.',
+                'data' => null
+            ], 400);
+        }
 
         $barang = Barang::create($request->all());
 
@@ -71,10 +82,21 @@ class BarangController extends Controller
 
         $request->validate([
             'nama' => 'sometimes|string|max:255',
-            'kategori_id' => 'sometimes|exists:kategoris,id',
+            'kategori_id' => 'sometimes|integer',
             'harga' => 'sometimes|integer|min:0',
             'jumlah' => 'sometimes|integer|min:0',
         ]);
+
+        if ($request->has('kategori_id')) {
+            $kategori = Kategori::find($request->kategori_id);
+            if (!$kategori) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Kategori tidak ditemukan.',
+                    'data' => null
+                ], 400);
+            }
+        }
 
         $barang->update($request->all());
 
