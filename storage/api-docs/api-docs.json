@@ -387,6 +387,218 @@
                     }
                 }
             }
+        },
+        "/transaksi-keluar": {
+            "get": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "List of Transaksi Keluar",
+                "description": "Retrieve a list of transaksi keluar",
+                "operationId": "listTransaksiKeluar",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Successfully retrieved transaksi keluar",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "barang_id": 2,
+                                            "supplier_id": 1,
+                                            "tanggal": "2024-04-30",
+                                            "jumlah": 5,
+                                            "harga_jual": 100000
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Create a new transaksi keluar",
+                "description": "Add a new transaksi keluar record",
+                "operationId": "createTransaksiKeluar",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "barang_id",
+                                    "supplier_id",
+                                    "tanggal",
+                                    "jumlah",
+                                    "harga_jual"
+                                ],
+                                "properties": {
+                                    "barang_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "supplier_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tanggal": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-04-30"
+                                    },
+                                    "jumlah": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "harga_jual": {
+                                        "type": "number",
+                                        "example": 100000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transaksi Keluar created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar created successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "barang_id": 2,
+                                        "supplier_id": 1,
+                                        "tanggal": "2024-04-30",
+                                        "jumlah": 5,
+                                        "harga_jual": 100000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaksi-keluar/{id}": {
+            "put": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Update a transaksi keluar",
+                "description": "Update an existing transaksi keluar",
+                "operationId": "updateTransaksiKeluar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "barang_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "supplier_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "tanggal": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-05-01"
+                                    },
+                                    "jumlah": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "harga_jual": {
+                                        "type": "number",
+                                        "example": 120000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Transaksi Keluar updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "barang_id": 3,
+                                        "supplier_id": 2,
+                                        "tanggal": "2024-05-01",
+                                        "jumlah": 10,
+                                        "harga_jual": 120000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Delete a transaksi keluar",
+                "description": "Delete a transaksi keluar record by ID",
+                "operationId": "deleteTransaksiKeluar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaksi Keluar deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar deleted successfully"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -397,6 +609,10 @@
         {
             "name": "Category",
             "description": "Category"
+        },
+        {
+            "name": "Transaksi Keluar",
+            "description": "Transaksi Keluar"
         }
     ]
 }
