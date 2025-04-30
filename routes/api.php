@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\API\KategoriController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\API\SupplierController;
@@ -9,6 +9,21 @@ use App\Http\Controllers\Transaksi_masukController;
 use App\Http\Controllers\Transaksi_keluarController;
 use Illuminate\Support\Facades\Route;
 
+
+/* 
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!  
+|
+*/
+
+Route::group([], function () {
+    Route::get('category', [KategoriController::class, 'listCategory']);
+});
 // Route::apiResource('kategoris', KategoriController::class);
 // Route::apiResource('barangs', BarangController::class);
 // Route::apiResource('pelanggans', PelangganController::class);

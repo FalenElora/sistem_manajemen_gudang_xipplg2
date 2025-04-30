@@ -19,14 +19,14 @@
         }
     ],
     "paths": {
-        "/supplier": {
+        "/barang": {
             "get": {
                 "tags": [
-                    "Supplier"
+                    "Barang"
                 ],
-                "summary": "List of Suppliers",
-                "description": "Retrieve all supplier data",
-                "operationId": "listSupplier",
+                "summary": "List of Barang",
+                "description": "Retrieve a list of barang",
+                "operationId": "listBarang",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -34,14 +34,15 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "status": 200,
-                                    "message": "Supplier retrieved successfully.",
+                                    "success": true,
+                                    "message": "Successfully retrieved barang",
                                     "data": [
                                         {
                                             "id": 1,
-                                            "nama_supplier": "PT Maju",
-                                            "kontak_selanggan": "0823456",
-                                            "alamat": "Jl. Merdeka"
+                                            "nama": "Mouse",
+                                            "kategori_id": 2,
+                                            "harga": 50000,
+                                            "jumlah": 10
                                         }
                                     ]
                                 }
@@ -52,33 +53,38 @@
             },
             "post": {
                 "tags": [
-                    "Supplier"
+                    "Barang"
                 ],
-                "summary": "Create a new supplier",
-                "description": "Add a new supplier",
-                "operationId": "createSupplier",
+                "summary": "Create a new barang",
+                "description": "Add a new barang to inventory",
+                "operationId": "createBarang",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "nama_supplier",
-                                    "kontak_selanggan",
-                                    "alamat"
+                                    "nama",
+                                    "kategori_id",
+                                    "harga",
+                                    "jumlah"
                                 ],
                                 "properties": {
-                                    "nama_supplier": {
+                                    "nama": {
                                         "type": "string",
-                                        "example": "PT Sejahtera"
+                                        "example": "Mouse"
                                     },
-                                    "kontak_selanggan": {
-                                        "type": "string",
-                                        "example": "08123456789"
+                                    "kategori_id": {
+                                        "type": "integer",
+                                        "example": 2
                                     },
-                                    "alamat": {
-                                        "type": "string",
-                                        "example": "Jl. Kebangsaan No.10"
+                                    "harga": {
+                                        "type": "number",
+                                        "example": 50000
+                                    },
+                                    "jumlah": {
+                                        "type": "integer",
+                                        "example": 10
                                     }
                                 },
                                 "type": "object"
@@ -88,18 +94,19 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Supplier created successfully",
+                        "description": "Barang created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "status": 201,
-                                    "message": "Supplier created successfully.",
+                                    "success": true,
+                                    "message": "Barang created successfully",
                                     "data": {
                                         "id": 3,
-                                        "nama_supplier": "PT Sejahtera",
-                                        "kontak_selanggan": "08123456789",
-                                        "alamat": "Jl. Kebangsaan No.10"
+                                        "nama": "Mouse",
+                                        "kategori_id": 2,
+                                        "harga": 50000,
+                                        "jumlah": 10
                                     }
                                 }
                             }
@@ -108,14 +115,14 @@
                 }
             }
         },
-        "/supplier/{id}": {
+        "/barang/{id}": {
             "put": {
                 "tags": [
-                    "Supplier"
+                    "Barang"
                 ],
-                "summary": "Update a supplier",
-                "description": "Update an existing supplier",
-                "operationId": "updateSupplier",
+                "summary": "Update a barang",
+                "description": "Update an existing barang",
+                "operationId": "updateBarang",
                 "parameters": [
                     {
                         "name": "id",
@@ -133,17 +140,21 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "nama_supplier": {
+                                    "nama": {
                                         "type": "string",
-                                        "example": "CV Makmur Jaya"
+                                        "example": "Keyboard"
                                     },
-                                    "kontak_selanggan": {
-                                        "type": "string",
-                                        "example": "08987654321"
+                                    "kategori_id": {
+                                        "type": "integer",
+                                        "example": 2
                                     },
-                                    "alamat": {
-                                        "type": "string",
-                                        "example": "Jl. Industri No.5"
+                                    "harga": {
+                                        "type": "number",
+                                        "example": 75000
+                                    },
+                                    "jumlah": {
+                                        "type": "integer",
+                                        "example": 5
                                     }
                                 },
                                 "type": "object"
@@ -153,18 +164,19 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Supplier updated successfully",
+                        "description": "Barang updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "status": 200,
-                                    "message": "Supplier updated successfully.",
+                                    "success": true,
+                                    "message": "Barang updated successfully",
                                     "data": {
                                         "id": 1,
-                                        "nama_supplier": "CV Makmur Jaya",
-                                        "kontak_selanggan": "08987654321",
-                                        "alamat": "Jl. Industri No.5"
+                                        "nama": "Keyboard",
+                                        "kategori_id": 2,
+                                        "harga": 75000,
+                                        "jumlah": 5
                                     }
                                 }
                             }
@@ -174,11 +186,11 @@
             },
             "delete": {
                 "tags": [
-                    "Supplier"
+                    "Barang"
                 ],
-                "summary": "Delete a supplier",
-                "description": "Delete a supplier by ID",
-                "operationId": "deleteSupplier",
+                "summary": "Delete a barang",
+                "description": "Delete an existing barang by ID",
+                "operationId": "deleteBarang",
                 "parameters": [
                     {
                         "name": "id",
@@ -192,14 +204,395 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Supplier deleted successfully",
+                        "description": "Barang deleted successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "status": 200,
-                                    "message": "Supplier deleted successfully.",
-                                    "data": null
+                                    "success": true,
+                                    "message": "Barang deleted successfully"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/category": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "List of Categories",
+                "description": "Retrieve a list of book categories",
+                "operationId": "listCategory",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Successfully retrieved categories",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "Fiction"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "Non-Fiction"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create a new category",
+                "description": "Add a new book category",
+                "operationId": "createCategory",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Science"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Category created successfully",
+                                    "data": {
+                                        "id": 3,
+                                        "name": "Science"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/category/{id}": {
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Update a category",
+                "description": "Update a book category by ID",
+                "operationId": "updateCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Fiction"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Category updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "Updated Fiction"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete a category",
+                "description": "Delete a book category by ID",
+                "operationId": "deleteCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Category deleted successfully"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaksi-keluar": {
+            "get": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "List of Transaksi Keluar",
+                "description": "Retrieve a list of transaksi keluar",
+                "operationId": "listTransaksiKeluar",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Successfully retrieved transaksi keluar",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "barang_id": 2,
+                                            "supplier_id": 1,
+                                            "tanggal": "2024-04-30",
+                                            "jumlah": 5,
+                                            "harga_jual": 100000
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Create a new transaksi keluar",
+                "description": "Add a new transaksi keluar record",
+                "operationId": "createTransaksiKeluar",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "barang_id",
+                                    "supplier_id",
+                                    "tanggal",
+                                    "jumlah",
+                                    "harga_jual"
+                                ],
+                                "properties": {
+                                    "barang_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "supplier_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tanggal": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-04-30"
+                                    },
+                                    "jumlah": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "harga_jual": {
+                                        "type": "number",
+                                        "example": 100000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transaksi Keluar created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar created successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "barang_id": 2,
+                                        "supplier_id": 1,
+                                        "tanggal": "2024-04-30",
+                                        "jumlah": 5,
+                                        "harga_jual": 100000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaksi-keluar/{id}": {
+            "put": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Update a transaksi keluar",
+                "description": "Update an existing transaksi keluar",
+                "operationId": "updateTransaksiKeluar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "barang_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "supplier_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "tanggal": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-05-01"
+                                    },
+                                    "jumlah": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "harga_jual": {
+                                        "type": "number",
+                                        "example": 120000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Transaksi Keluar updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "barang_id": 3,
+                                        "supplier_id": 2,
+                                        "tanggal": "2024-05-01",
+                                        "jumlah": 10,
+                                        "harga_jual": 120000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Delete a transaksi keluar",
+                "description": "Delete a transaksi keluar record by ID",
+                "operationId": "deleteTransaksiKeluar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaksi Keluar deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar deleted successfully"
                                 }
                             }
                         }
@@ -210,8 +603,16 @@
     },
     "tags": [
         {
-            "name": "Supplier",
-            "description": "Supplier"
+            "name": "Barang",
+            "description": "Barang"
+        },
+        {
+            "name": "Category",
+            "description": "Category"
+        },
+        {
+            "name": "Transaksi Keluar",
+            "description": "Transaksi Keluar"
         }
     ]
 }
