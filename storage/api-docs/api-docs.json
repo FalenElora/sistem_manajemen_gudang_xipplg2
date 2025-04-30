@@ -1,0 +1,217 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "Documentation for the Bookstore API",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apche.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/supplier": {
+            "get": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "List of Suppliers",
+                "description": "Retrieve all supplier data",
+                "operationId": "listSupplier",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier retrieved successfully.",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "nama_supplier": "PT Maju",
+                                            "kontak_selanggan": "0823456",
+                                            "alamat": "Jl. Merdeka"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Create a new supplier",
+                "description": "Add a new supplier",
+                "operationId": "createSupplier",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama_supplier",
+                                    "kontak_selanggan",
+                                    "alamat"
+                                ],
+                                "properties": {
+                                    "nama_supplier": {
+                                        "type": "string",
+                                        "example": "PT Sejahtera"
+                                    },
+                                    "kontak_selanggan": {
+                                        "type": "string",
+                                        "example": "08123456789"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Kebangsaan No.10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Supplier created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 201,
+                                    "message": "Supplier created successfully.",
+                                    "data": {
+                                        "id": 3,
+                                        "nama_supplier": "PT Sejahtera",
+                                        "kontak_selanggan": "08123456789",
+                                        "alamat": "Jl. Kebangsaan No.10"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/supplier/{id}": {
+            "put": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Update a supplier",
+                "description": "Update an existing supplier",
+                "operationId": "updateSupplier",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nama_supplier": {
+                                        "type": "string",
+                                        "example": "CV Makmur Jaya"
+                                    },
+                                    "kontak_selanggan": {
+                                        "type": "string",
+                                        "example": "08987654321"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Industri No.5"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Supplier updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier updated successfully.",
+                                    "data": {
+                                        "id": 1,
+                                        "nama_supplier": "CV Makmur Jaya",
+                                        "kontak_selanggan": "08987654321",
+                                        "alamat": "Jl. Industri No.5"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Delete a supplier",
+                "description": "Delete a supplier by ID",
+                "operationId": "deleteSupplier",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier deleted successfully.",
+                                    "data": null
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Supplier",
+            "description": "Supplier"
+        }
+    ]
+}
