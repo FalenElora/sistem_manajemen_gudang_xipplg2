@@ -1,14 +1,29 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\API\BarangController;
+use App\Http\Controllers\API\KategoriController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\Transaksi_masukController;
 use App\Http\Controllers\Transaksi_keluarController;
 use Illuminate\Support\Facades\Route;
 
+
+/* 
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!  
+|
+*/
+
+Route::group([], function () {
+    Route::get('category', [KategoriController::class, 'listCategory']);
+});
 // Route::apiResource('kategoris', KategoriController::class);
 // Route::apiResource('barangs', BarangController::class);
 // Route::apiResource('pelanggans', PelangganController::class);
@@ -20,27 +35,3 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
-
-/**
- * @OA\Get(
- *     path="/api/category",
- *     tags={"Category"},
- *     summary="Ambil daftar kategori",
- *     description="Mengambil semua kategori buku yang tersedia",
- *     operationId="listCategory",
- *     @OA\Response(
- *         response=200,
- *         description="Kategori berhasil diambil",
- *         @OA\JsonContent(
- *             example={
- *                 "success": true,
- *                 "message": "Successfully retrieved categories",
- *                 "data": {
- *                     {"id": 1, "name": "Fiction"},
- *                     {"id": 2, "name": "Non-Fiction"}
- *                 }
- *             }
- *         )
- *     )
- * )
- */
