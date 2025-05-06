@@ -8,7 +8,9 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\Transaksi_masukController;
 use App\Http\Controllers\Transaksi_keluarController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\TransaksiMasukController;
 
+Route::get('/transaksi-masuk', [TransaksiMasukController::class, 'listTransaksiMasuk']);
 
 /* 
 |--------------------------------------------------------------------------
