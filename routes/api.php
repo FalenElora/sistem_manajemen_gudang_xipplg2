@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\KategoriController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PelangganController;
-use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\API\SupplierController;
 use App\Http\Controllers\Transaksi_masukController;
 use App\Http\Controllers\Transaksi_keluarController;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +37,15 @@ Route::group([], function () {
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+
+Route::group([], function () {
+    // Category Routes
+    Route::get('category', [CategoryController::class, 'listCategory']);
+
+    // Supplier Routes
+    Route::get('suppliers', [SupplierController::class, 'index']);
+    Route::post('suppliers', [SupplierController::class, 'store']);
+    Route::get('suppliers/{id}', [SupplierController::class, 'show']);
+    Route::put('suppliers/{id}', [SupplierController::class, 'update']);
+    Route::delete('suppliers/{id}', [SupplierController::class, 'destroy']);
+});
