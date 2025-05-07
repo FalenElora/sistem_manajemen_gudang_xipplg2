@@ -53,7 +53,7 @@ class KategoriController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"name"},
-     *             @OA\Property(property="name", type="string", example="Science")
+     *             @OA\Property(property="name", type="string", example="Makanan")
      *         )
      *     ),
      *     @OA\Response(
@@ -63,7 +63,7 @@ class KategoriController extends Controller
      *             example={
      *                 "success": true,
      *                 "message": "Category created successfully",
-     *                 "data": {"id": 3, "name": "Science"}
+     *                 "data": {"id": 3, "name": "Makanan"}
      *             }
      *         )
      *     )
