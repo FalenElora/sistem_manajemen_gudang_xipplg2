@@ -1,6 +1,10 @@
 {
     "openapi": "3.0.0",
     "info": {
+<<<<<<< HEAD
+        "title": "API Portal Berita",
+        "description": "Portal Berita API Documentation",
+=======
         "title": "API Documentation",
         "description": "Documentation for the Bookstore API",
         "contact": {
@@ -10,10 +14,33 @@
             "name": "Apache 2.0",
             "url": "http://www.apche.org/licenses/LICENSE-2.0.html"
         },
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
         "version": "1.0.0"
     },
     "servers": [
         {
+<<<<<<< HEAD
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Local server"
+        },
+        {
+            "url": "http://staging.example.com",
+            "description": "Staging server"
+        },
+        {
+            "url": "http://example.com",
+            "description": "Production server"
+        }
+    ],
+    "paths": {
+        "/pelanggan": {
+            "get": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "List all pelanggan",
+                "operationId": "listPelanggan",
+=======
             "url": "http://localhost:8000/api",
             "description": "API Server"
         }
@@ -27,6 +54,7 @@
                 "summary": "List of Barang",
                 "description": "Retrieve a list of barang",
                 "operationId": "listBarang",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -35,6 +63,15 @@
                                 "schema": {},
                                 "example": {
                                     "success": true,
+<<<<<<< HEAD
+                                    "message": "Pelanggan retrieved successfully",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "nama": "Budi",
+                                            "kontak": "08123456789",
+                                            "alamat": "Jl. Merdeka 10"
+=======
                                     "message": "Successfully retrieved barang",
                                     "data": [
                                         {
@@ -43,6 +80,7 @@
                                             "kategori_id": 2,
                                             "harga": 50000,
                                             "jumlah": 10
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                         }
                                     ]
                                 }
@@ -53,11 +91,18 @@
             },
             "post": {
                 "tags": [
+<<<<<<< HEAD
+                    "Pelanggan"
+                ],
+                "summary": "Create a new pelanggan",
+                "operationId": "createPelanggan",
+=======
                     "Barang"
                 ],
                 "summary": "Create a new barang",
                 "description": "Add a new barang to inventory",
                 "operationId": "createBarang",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -65,13 +110,29 @@
                             "schema": {
                                 "required": [
                                     "nama",
+<<<<<<< HEAD
+                                    "kontak",
+                                    "alamat"
+=======
                                     "kategori_id",
                                     "harga",
                                     "jumlah"
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                 ],
                                 "properties": {
                                     "nama": {
                                         "type": "string",
+<<<<<<< HEAD
+                                        "example": "Siti"
+                                    },
+                                    "kontak": {
+                                        "type": "string",
+                                        "example": "081298765432"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Diponegoro 15"
+=======
                                         "example": "Mouse"
                                     },
                                     "kategori_id": {
@@ -85,6 +146,7 @@
                                     "jumlah": {
                                         "type": "integer",
                                         "example": 10
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 },
                                 "type": "object"
@@ -94,12 +156,24 @@
                 },
                 "responses": {
                     "201": {
+<<<<<<< HEAD
+                        "description": "Pelanggan created successfully",
+=======
                         "description": "Barang created successfully",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
+<<<<<<< HEAD
+                                    "message": "Pelanggan created successfully",
+                                    "data": {
+                                        "id": 2,
+                                        "nama": "Siti",
+                                        "kontak": "081298765432",
+                                        "alamat": "Jl. Diponegoro 15"
+=======
                                     "message": "Barang created successfully",
                                     "data": {
                                         "id": 3,
@@ -107,6 +181,7 @@
                                         "kategori_id": 2,
                                         "harga": 50000,
                                         "jumlah": 10
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 }
                             }
@@ -115,6 +190,15 @@
                 }
             }
         },
+<<<<<<< HEAD
+        "/pelanggan/{id}": {
+            "put": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "Update existing pelanggan",
+                "operationId": "updatePelanggan",
+=======
         "/barang/{id}": {
             "put": {
                 "tags": [
@@ -500,6 +584,7 @@
                 "summary": "Update a transaksi keluar",
                 "description": "Update an existing transaksi keluar",
                 "operationId": "updateTransaksiKeluar",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "parameters": [
                     {
                         "name": "id",
@@ -516,6 +601,19 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
+<<<<<<< HEAD
+                                    "nama": {
+                                        "type": "string",
+                                        "example": "Andi"
+                                    },
+                                    "kontak": {
+                                        "type": "string",
+                                        "example": "081234000000"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Sudirman 23"
+=======
                                     "barang_id": {
                                         "type": "integer",
                                         "example": 3
@@ -536,6 +634,7 @@
                                     "harga_jual": {
                                         "type": "number",
                                         "example": 120000
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 },
                                 "type": "object"
@@ -545,12 +644,24 @@
                 },
                 "responses": {
                     "200": {
+<<<<<<< HEAD
+                        "description": "Pelanggan updated successfully",
+=======
                         "description": "Transaksi Keluar updated successfully",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
+<<<<<<< HEAD
+                                    "message": "Pelanggan updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "nama": "Andi",
+                                        "kontak": "081234000000",
+                                        "alamat": "Jl. Sudirman 23"
+=======
                                     "message": "Transaksi Keluar updated successfully",
                                     "data": {
                                         "id": 1,
@@ -559,6 +670,7 @@
                                         "tanggal": "2024-05-01",
                                         "jumlah": 10,
                                         "harga_jual": 120000
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 }
                             }
@@ -568,11 +680,18 @@
             },
             "delete": {
                 "tags": [
+<<<<<<< HEAD
+                    "Pelanggan"
+                ],
+                "summary": "Delete a pelanggan",
+                "operationId": "deletePelanggan",
+=======
                     "Transaksi Keluar"
                 ],
                 "summary": "Delete a transaksi keluar",
                 "description": "Delete a transaksi keluar record by ID",
                 "operationId": "deleteTransaksiKeluar",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "parameters": [
                     {
                         "name": "id",
@@ -586,13 +705,21 @@
                 ],
                 "responses": {
                     "200": {
+<<<<<<< HEAD
+                        "description": "Pelanggan deleted successfully",
+=======
                         "description": "Transaksi Keluar deleted successfully",
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
+<<<<<<< HEAD
+                                    "message": "Pelanggan deleted successfully"
+=======
                                     "message": "Transaksi Keluar deleted successfully"
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                 }
                             }
                         }
@@ -601,6 +728,22 @@
             }
         }
     },
+<<<<<<< HEAD
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Pelanggan",
+            "description": "Pelanggan"
+=======
     "tags": [
         {
             "name": "Barang",
@@ -613,6 +756,7 @@
         {
             "name": "Transaksi Keluar",
             "description": "Transaksi Keluar"
+>>>>>>> 893040766baa160a46f356d1a5684097da6e2034
         }
     ]
 }

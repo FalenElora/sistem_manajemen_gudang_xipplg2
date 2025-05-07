@@ -7,25 +7,35 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+use OpenAPI\Attributes as OA;
+
 /**
  * @OA\Info(
- *      version="1.0.0",
- *      title="API Documentation",
- *      description="Documentation for the Bookstore API",
- *      @OA\Contact(
- *          email="admin@example.com"
- *      ),
- *      @OA\License(
- *          name="Apache 2.0",
- *          url="http://www.apche.org/licenses/LICENSE-2.0.html"
- *      )
+ *     version="1.0.0",
+ *     title="API Portal Berita",
+ *     description="Portal Berita API Documentation"
  * )
  * @OA\Server(
- *      url=L5_SWAGGER_CONST_HOST,
- *      description="API Server"
+ *     url="http://127.0.0.1:8000/api",
+ *     description="Local server"
+ * )
+ * @OA\Server(
+ *     url="http://staging.example.com",
+ *     description="Staging server"
+ * )
+ * @OA\Server(
+ *     url="http://example.com",
+ *     description="Production server"
+ * )
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     name="Authorization",
+ *     in="header",
+ *     scheme="bearer"
  * )
  */
-class Controller extends BaseController
-{
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+abstract class Controller {
+    
 }
