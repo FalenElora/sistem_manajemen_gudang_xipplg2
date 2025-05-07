@@ -1,25 +1,12 @@
 {
     "openapi": "3.0.0",
     "info": {
-<<<<<<< HEAD
         "title": "API Portal Berita",
         "description": "Portal Berita API Documentation",
-=======
-        "title": "API Documentation",
-        "description": "Documentation for the Bookstore API",
-        "contact": {
-            "email": "admin@example.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apche.org/licenses/LICENSE-2.0.html"
-        },
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
         "version": "1.0.0"
     },
     "servers": [
         {
-<<<<<<< HEAD
             "url": "http://127.0.0.1:8000/api",
             "description": "Local server"
         },
@@ -33,19 +20,6 @@
         }
     ],
     "paths": {
-        "/pelanggan": {
-            "get": {
-                "tags": [
-                    "Pelanggan"
-                ],
-                "summary": "List all pelanggan",
-                "operationId": "listPelanggan",
-=======
-            "url": "http://localhost:8000/api",
-            "description": "API Server"
-        }
-    ],
-    "paths": {
         "/barang": {
             "get": {
                 "tags": [
@@ -54,7 +28,6 @@
                 "summary": "List of Barang",
                 "description": "Retrieve a list of barang",
                 "operationId": "listBarang",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -63,15 +36,6 @@
                                 "schema": {},
                                 "example": {
                                     "success": true,
-<<<<<<< HEAD
-                                    "message": "Pelanggan retrieved successfully",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Budi",
-                                            "kontak": "08123456789",
-                                            "alamat": "Jl. Merdeka 10"
-=======
                                     "message": "Successfully retrieved barang",
                                     "data": [
                                         {
@@ -80,7 +44,6 @@
                                             "kategori_id": 2,
                                             "harga": 50000,
                                             "jumlah": 10
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                         }
                                     ]
                                 }
@@ -91,18 +54,11 @@
             },
             "post": {
                 "tags": [
-<<<<<<< HEAD
-                    "Pelanggan"
-                ],
-                "summary": "Create a new pelanggan",
-                "operationId": "createPelanggan",
-=======
                     "Barang"
                 ],
                 "summary": "Create a new barang",
                 "description": "Add a new barang to inventory",
                 "operationId": "createBarang",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -110,29 +66,13 @@
                             "schema": {
                                 "required": [
                                     "nama",
-<<<<<<< HEAD
-                                    "kontak",
-                                    "alamat"
-=======
                                     "kategori_id",
                                     "harga",
                                     "jumlah"
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                 ],
                                 "properties": {
                                     "nama": {
                                         "type": "string",
-<<<<<<< HEAD
-                                        "example": "Siti"
-                                    },
-                                    "kontak": {
-                                        "type": "string",
-                                        "example": "081298765432"
-                                    },
-                                    "alamat": {
-                                        "type": "string",
-                                        "example": "Jl. Diponegoro 15"
-=======
                                         "example": "Mouse"
                                     },
                                     "kategori_id": {
@@ -146,7 +86,6 @@
                                     "jumlah": {
                                         "type": "integer",
                                         "example": 10
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 },
                                 "type": "object"
@@ -156,24 +95,12 @@
                 },
                 "responses": {
                     "201": {
-<<<<<<< HEAD
-                        "description": "Pelanggan created successfully",
-=======
                         "description": "Barang created successfully",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
-<<<<<<< HEAD
-                                    "message": "Pelanggan created successfully",
-                                    "data": {
-                                        "id": 2,
-                                        "nama": "Siti",
-                                        "kontak": "081298765432",
-                                        "alamat": "Jl. Diponegoro 15"
-=======
                                     "message": "Barang created successfully",
                                     "data": {
                                         "id": 3,
@@ -181,7 +108,6 @@
                                         "kategori_id": 2,
                                         "harga": 50000,
                                         "jumlah": 10
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 }
                             }
@@ -190,15 +116,6 @@
                 }
             }
         },
-<<<<<<< HEAD
-        "/pelanggan/{id}": {
-            "put": {
-                "tags": [
-                    "Pelanggan"
-                ],
-                "summary": "Update existing pelanggan",
-                "operationId": "updatePelanggan",
-=======
         "/barang/{id}": {
             "put": {
                 "tags": [
@@ -472,6 +389,376 @@
                 }
             }
         },
+        "/pelanggan": {
+            "get": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "List all pelanggan",
+                "operationId": "listPelanggan",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Pelanggan retrieved successfully",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "nama": "Budi",
+                                            "kontak": "08123456789",
+                                            "alamat": "Jl. Merdeka 10"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "Create a new pelanggan",
+                "operationId": "createPelanggan",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama",
+                                    "kontak",
+                                    "alamat"
+                                ],
+                                "properties": {
+                                    "nama": {
+                                        "type": "string",
+                                        "example": "Siti"
+                                    },
+                                    "kontak": {
+                                        "type": "string",
+                                        "example": "081298765432"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Diponegoro 15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pelanggan created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Pelanggan created successfully",
+                                    "data": {
+                                        "id": 2,
+                                        "nama": "Siti",
+                                        "kontak": "081298765432",
+                                        "alamat": "Jl. Diponegoro 15"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pelanggan/{id}": {
+            "put": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "Update existing pelanggan",
+                "operationId": "updatePelanggan",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nama": {
+                                        "type": "string",
+                                        "example": "Andi"
+                                    },
+                                    "kontak": {
+                                        "type": "string",
+                                        "example": "081234000000"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Sudirman 23"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Pelanggan updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Pelanggan updated successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "nama": "Andi",
+                                        "kontak": "081234000000",
+                                        "alamat": "Jl. Sudirman 23"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "Delete a pelanggan",
+                "operationId": "deletePelanggan",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pelanggan deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Pelanggan deleted successfully"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/supplier": {
+            "get": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "List of Suppliers",
+                "description": "Retrieve all supplier data",
+                "operationId": "listSupplier",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier retrieved successfully.",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "nama_supplier": "PT Maju",
+                                            "kontak_selanggan": "0823456",
+                                            "alamat": "Jl. Merdeka"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Create a new supplier",
+                "description": "Add a new supplier",
+                "operationId": "createSupplier",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama_supplier",
+                                    "kontak_selanggan",
+                                    "alamat"
+                                ],
+                                "properties": {
+                                    "nama_supplier": {
+                                        "type": "string",
+                                        "example": "PT Sejahtera"
+                                    },
+                                    "kontak_selanggan": {
+                                        "type": "string",
+                                        "example": "08123456789"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Kebangsaan No.10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Supplier created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 201,
+                                    "message": "Supplier created successfully.",
+                                    "data": {
+                                        "id": 3,
+                                        "nama_supplier": "PT Sejahtera",
+                                        "kontak_selanggan": "08123456789",
+                                        "alamat": "Jl. Kebangsaan No.10"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/supplier/{id}": {
+            "put": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Update a supplier",
+                "description": "Update an existing supplier",
+                "operationId": "updateSupplier",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nama_supplier": {
+                                        "type": "string",
+                                        "example": "CV Makmur Jaya"
+                                    },
+                                    "kontak_selanggan": {
+                                        "type": "string",
+                                        "example": "08987654321"
+                                    },
+                                    "alamat": {
+                                        "type": "string",
+                                        "example": "Jl. Industri No.5"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Supplier updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier updated successfully.",
+                                    "data": {
+                                        "id": 1,
+                                        "nama_supplier": "CV Makmur Jaya",
+                                        "kontak_selanggan": "08987654321",
+                                        "alamat": "Jl. Industri No.5"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Delete a supplier",
+                "description": "Delete a supplier by ID",
+                "operationId": "deleteSupplier",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier deleted successfully.",
+                                    "data": null
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/transaksi-keluar": {
             "get": {
                 "tags": [
@@ -584,7 +871,6 @@
                 "summary": "Update a transaksi keluar",
                 "description": "Update an existing transaksi keluar",
                 "operationId": "updateTransaksiKeluar",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "parameters": [
                     {
                         "name": "id",
@@ -601,19 +887,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-<<<<<<< HEAD
-                                    "nama": {
-                                        "type": "string",
-                                        "example": "Andi"
-                                    },
-                                    "kontak": {
-                                        "type": "string",
-                                        "example": "081234000000"
-                                    },
-                                    "alamat": {
-                                        "type": "string",
-                                        "example": "Jl. Sudirman 23"
-=======
                                     "barang_id": {
                                         "type": "integer",
                                         "example": 3
@@ -634,7 +907,6 @@
                                     "harga_jual": {
                                         "type": "number",
                                         "example": 120000
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 },
                                 "type": "object"
@@ -644,24 +916,12 @@
                 },
                 "responses": {
                     "200": {
-<<<<<<< HEAD
-                        "description": "Pelanggan updated successfully",
-=======
                         "description": "Transaksi Keluar updated successfully",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
-<<<<<<< HEAD
-                                    "message": "Pelanggan updated successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "nama": "Andi",
-                                        "kontak": "081234000000",
-                                        "alamat": "Jl. Sudirman 23"
-=======
                                     "message": "Transaksi Keluar updated successfully",
                                     "data": {
                                         "id": 1,
@@ -670,7 +930,6 @@
                                         "tanggal": "2024-05-01",
                                         "jumlah": 10,
                                         "harga_jual": 120000
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                     }
                                 }
                             }
@@ -680,18 +939,11 @@
             },
             "delete": {
                 "tags": [
-<<<<<<< HEAD
-                    "Pelanggan"
-                ],
-                "summary": "Delete a pelanggan",
-                "operationId": "deletePelanggan",
-=======
                     "Transaksi Keluar"
                 ],
                 "summary": "Delete a transaksi keluar",
                 "description": "Delete a transaksi keluar record by ID",
                 "operationId": "deleteTransaksiKeluar",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                 "parameters": [
                     {
                         "name": "id",
@@ -705,21 +957,13 @@
                 ],
                 "responses": {
                     "200": {
-<<<<<<< HEAD
-                        "description": "Pelanggan deleted successfully",
-=======
                         "description": "Transaksi Keluar deleted successfully",
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
-<<<<<<< HEAD
-                                    "message": "Pelanggan deleted successfully"
-=======
                                     "message": "Transaksi Keluar deleted successfully"
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
                                 }
                             }
                         }
@@ -728,7 +972,6 @@
             }
         }
     },
-<<<<<<< HEAD
     "components": {
         "securitySchemes": {
             "bearerAuth": {
@@ -741,11 +984,6 @@
     },
     "tags": [
         {
-            "name": "Pelanggan",
-            "description": "Pelanggan"
-=======
-    "tags": [
-        {
             "name": "Barang",
             "description": "Barang"
         },
@@ -754,9 +992,16 @@
             "description": "Category"
         },
         {
+            "name": "Pelanggan",
+            "description": "Pelanggan"
+        },
+        {
+            "name": "Supplier",
+            "description": "Supplier"
+        },
+        {
             "name": "Transaksi Keluar",
             "description": "Transaksi Keluar"
->>>>>>> 893040766baa160a46f356d1a5684097da6e2034
         }
     ]
 }

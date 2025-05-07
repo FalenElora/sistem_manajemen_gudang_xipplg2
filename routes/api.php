@@ -38,7 +38,7 @@ Route::group([], function () {
 
 Route::group([], function () {
     // Category Routes
-    Route::get('category', [CategoryController::class, 'listCategory']);
+    Route::get('category', [KategoriController::class, 'listCategory']);
 
     // Supplier Routes
     Route::get('suppliers', [SupplierController::class, 'index']);
