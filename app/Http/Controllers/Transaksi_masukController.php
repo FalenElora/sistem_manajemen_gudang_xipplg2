@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class Transaksi_masukController extends Controller
 {
-    public function index()
     /**
  * @OA\Get(
  *     path="/transaksi-masuk",
@@ -46,7 +45,7 @@ class Transaksi_masukController extends Controller
  *     )
  * )
  */
-
+    public function index()
     {
         $transaksiMasuks = Transaksi_masuk::with('barang', 'supplier')->get();
 

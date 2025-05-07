@@ -22,7 +22,9 @@
     "paths": {
         "/barang": {
             "get": {
-                "tags": ["Barang"],
+                "tags": [
+                    "Barang"
+                ],
                 "summary": "List of Barang",
                 "description": "Retrieve a list of barang",
                 "operationId": "listBarang",
@@ -51,7 +53,9 @@
                 }
             },
             "post": {
-                "tags": ["Barang"],
+                "tags": [
+                    "Barang"
+                ],
                 "summary": "Create a new barang",
                 "description": "Add a new barang to inventory",
                 "operationId": "createBarang",
@@ -114,7 +118,9 @@
         },
         "/barang/{id}": {
             "put": {
-                "tags": ["Barang"],
+                "tags": [
+                    "Barang"
+                ],
                 "summary": "Update a barang",
                 "description": "Update an existing barang",
                 "operationId": "updateBarang",
@@ -180,7 +186,9 @@
                 }
             },
             "delete": {
-                "tags": ["Barang"],
+                "tags": [
+                    "Barang"
+                ],
                 "summary": "Delete a barang",
                 "description": "Delete an existing barang by ID",
                 "operationId": "deleteBarang",
@@ -213,7 +221,9 @@
         },
         "/category": {
             "get": {
-                "tags": ["Category"],
+                "tags": [
+                    "Category"
+                ],
                 "summary": "List of Categories",
                 "description": "Retrieve a list of book categories",
                 "operationId": "listCategory",
@@ -243,7 +253,9 @@
                 }
             },
             "post": {
-                "tags": ["Category"],
+                "tags": [
+                    "Category"
+                ],
                 "summary": "Create a new category",
                 "description": "Add a new book category",
                 "operationId": "createCategory",
@@ -252,7 +264,9 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": ["name"],
+                                "required": [
+                                    "name"
+                                ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
@@ -286,7 +300,9 @@
         },
         "/category/{id}": {
             "put": {
-                "tags": ["Category"],
+                "tags": [
+                    "Category"
+                ],
                 "summary": "Update a category",
                 "description": "Update a book category by ID",
                 "operationId": "updateCategory",
@@ -306,7 +322,9 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": ["name"],
+                                "required": [
+                                    "name"
+                                ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
@@ -338,7 +356,9 @@
                 }
             },
             "delete": {
-                "tags": ["Category"],
+                "tags": [
+                    "Category"
+                ],
                 "summary": "Delete a category",
                 "description": "Delete a book category by ID",
                 "operationId": "deleteCategory",
@@ -371,7 +391,9 @@
         },
         "/pelanggan": {
             "get": {
-                "tags": ["Pelanggan"],
+                "tags": [
+                    "Pelanggan"
+                ],
                 "summary": "List all pelanggan",
                 "operationId": "listPelanggan",
                 "responses": {
@@ -398,7 +420,9 @@
                 }
             },
             "post": {
-                "tags": ["Pelanggan"],
+                "tags": [
+                    "Pelanggan"
+                ],
                 "summary": "Create a new pelanggan",
                 "operationId": "createPelanggan",
                 "requestBody": {
@@ -406,7 +430,11 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": ["nama", "kontak", "alamat"],
+                                "required": [
+                                    "nama",
+                                    "kontak",
+                                    "alamat"
+                                ],
                                 "properties": {
                                     "nama": {
                                         "type": "string",
@@ -450,7 +478,9 @@
         },
         "/pelanggan/{id}": {
             "put": {
-                "tags": ["Pelanggan"],
+                "tags": [
+                    "Pelanggan"
+                ],
                 "summary": "Update existing pelanggan",
                 "operationId": "updatePelanggan",
                 "parameters": [
@@ -509,7 +539,9 @@
                 }
             },
             "delete": {
-                "tags": ["Pelanggan"],
+                "tags": [
+                    "Pelanggan"
+                ],
                 "summary": "Delete a pelanggan",
                 "operationId": "deletePelanggan",
                 "parameters": [
@@ -541,7 +573,9 @@
         },
         "/supplier": {
             "get": {
-                "tags": ["Supplier"],
+                "tags": [
+                    "Supplier"
+                ],
                 "summary": "List of Suppliers",
                 "description": "Retrieve all supplier data",
                 "operationId": "listSupplier",
@@ -569,7 +603,9 @@
                 }
             },
             "post": {
-                "tags": ["Supplier"],
+                "tags": [
+                    "Supplier"
+                ],
                 "summary": "Create a new supplier",
                 "description": "Add a new supplier",
                 "operationId": "createSupplier",
@@ -626,7 +662,9 @@
         },
         "/supplier/{id}": {
             "put": {
-                "tags": ["Supplier"],
+                "tags": [
+                    "Supplier"
+                ],
                 "summary": "Update a supplier",
                 "description": "Update an existing supplier",
                 "operationId": "updateSupplier",
@@ -687,7 +725,9 @@
                 }
             },
             "delete": {
-                "tags": ["Supplier"],
+                "tags": [
+                    "Supplier"
+                ],
                 "summary": "Delete a supplier",
                 "description": "Delete a supplier by ID",
                 "operationId": "deleteSupplier",
@@ -721,7 +761,9 @@
         },
         "/transaksi-keluar": {
             "get": {
-                "tags": ["Transaksi Keluar"],
+                "tags": [
+                    "Transaksi Keluar"
+                ],
                 "summary": "List of Transaksi Keluar",
                 "description": "Retrieve a list of transaksi keluar",
                 "operationId": "listTransaksiKeluar",
@@ -751,7 +793,9 @@
                 }
             },
             "post": {
-                "tags": ["Transaksi Keluar"],
+                "tags": [
+                    "Transaksi Keluar"
+                ],
                 "summary": "Create a new transaksi keluar",
                 "description": "Add a new transaksi keluar record",
                 "operationId": "createTransaksiKeluar",
@@ -821,7 +865,9 @@
         },
         "/transaksi-keluar/{id}": {
             "put": {
-                "tags": ["Transaksi Keluar"],
+                "tags": [
+                    "Transaksi Keluar"
+                ],
                 "summary": "Update a transaksi keluar",
                 "description": "Update an existing transaksi keluar",
                 "operationId": "updateTransaksiKeluar",
@@ -892,7 +938,9 @@
                 }
             },
             "delete": {
-                "tags": ["Transaksi Keluar"],
+                "tags": [
+                    "Transaksi Keluar"
+                ],
                 "summary": "Delete a transaksi keluar",
                 "description": "Delete a transaksi keluar record by ID",
                 "operationId": "deleteTransaksiKeluar",
@@ -925,7 +973,9 @@
         },
         "/transaksi-masuk": {
             "get": {
-                "tags": ["Transaksi Masuk"],
+                "tags": [
+                    "Transaksi Masuk"
+                ],
                 "summary": "List of Transaksi Masuk",
                 "description": "Retrieve a list of incoming transactions",
                 "operationId": "listTransaksiMasuk",

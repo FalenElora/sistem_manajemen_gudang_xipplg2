@@ -4,49 +4,14 @@ namespace App\Http\Controllers;
 use App\Models\Transaksi_masuk;
 use App\Models\Barang;
 
-
+use OpenApi\Annotations as OA;
 
 use Illuminate\Http\Request;
 
 class Transaksi_masukController extends Controller
 {
-    public function index()
-    /**
- * @OA\Get(
- *     path="/transaksi-masuk",
- *     tags={"Transaksi Masuk"},
- *     operationId="listTransaksiMasuk",
- *     summary="List of Transaksi Masuk",
- *     description="Retrieve a list of incoming transactions",
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             example={
- *                 "success": true,
- *                 "message": "Successfully retrieved incoming transactions",
- *                 "data": {
- *                     {
- *                         "barang_id": 1,
- *                         "suplier_id": 2,
- *                         "tanggal": "2025-05-06",
- *                         "jumlah": 10,
- *                         "harga_beli": 15000
- *                     },
- *                     {
- *                         "barang_id": 2,
- *                         "suplier_id": 3,
- *                         "tanggal": "2025-05-05",
- *                         "jumlah": 5,
- *                         "harga_beli": 20000
- *                     }
- *                 }
- *             }
- *         )
- *     )
- * )
- */
 
+        public function index()
     {
         $transaksiMasuks = Transaksi_masuk::with('barang', 'supplier')->get();
 
