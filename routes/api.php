@@ -47,3 +47,4 @@ Route::group([], function () {
     Route::put('suppliers/{id}', [SupplierController::class, 'update']);
     Route::delete('suppliers/{id}', [SupplierController::class, 'destroy']);
 });
+

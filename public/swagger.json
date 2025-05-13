@@ -117,58 +117,6 @@
             }
         },
         "/barang/{id}": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Get barang by ID",
-                "description": "Retrieve a single barang record by its ID",
-                "operationId": "getBarangById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Barang retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang retrieved successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "nama": "Mouse",
-                                        "kategori_id": 2,
-                                        "harga": 50000,
-                                        "jumlah": 10
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Barang not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "Barang not found"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "put": {
                 "tags": [
                     "Barang"
@@ -832,7 +780,7 @@
                                         {
                                             "id": 1,
                                             "barang_id": 2,
-                                            "pelanggan_id": 1,
+                                            "supplier_id": 1,
                                             "tanggal": "2024-04-30",
                                             "jumlah": 5,
                                             "harga_jual": 100000
@@ -858,7 +806,7 @@
                             "schema": {
                                 "required": [
                                     "barang_id",
-                                    "pelanggan_id",
+                                    "supplier_id",
                                     "tanggal",
                                     "jumlah",
                                     "harga_jual"
@@ -868,7 +816,7 @@
                                         "type": "integer",
                                         "example": 2
                                     },
-                                    "pelanggan_id": {
+                                    "supplier_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
@@ -903,7 +851,7 @@
                                     "data": {
                                         "id": 1,
                                         "barang_id": 2,
-                                        "pelanggan_id": 1,
+                                        "supplier_id": 1,
                                         "tanggal": "2024-04-30",
                                         "jumlah": 5,
                                         "harga_jual": 100000
@@ -943,7 +891,7 @@
                                         "type": "integer",
                                         "example": 3
                                     },
-                                    "pelanggan_id": {
+                                    "supplier_id": {
                                         "type": "integer",
                                         "example": 2
                                     },
@@ -978,7 +926,7 @@
                                     "data": {
                                         "id": 1,
                                         "barang_id": 3,
-                                        "pelanggan_id": 2,
+                                        "supplier_id": 2,
                                         "tanggal": "2024-05-01",
                                         "jumlah": 10,
                                         "harga_jual": 120000
@@ -1026,10 +974,10 @@
         "/transaksi-masuk": {
             "get": {
                 "tags": [
-                    "Transaksi masuk"
+                    "Transaksi Masuk"
                 ],
                 "summary": "List of Transaksi Masuk",
-                "description": "Retrieve a list of transaksi masuk",
+                "description": "Retrieve a list of incoming transactions",
                 "operationId": "listTransaksiMasuk",
                 "responses": {
                     "200": {
@@ -1039,195 +987,23 @@
                                 "schema": {},
                                 "example": {
                                     "success": true,
-                                    "message": "Successfully retrieved transaksi masuk",
+                                    "message": "Successfully retrieved incoming transactions",
                                     "data": [
                                         {
-                                            "id": 1,
+                                            "barang_id": 1,
+                                            "suplier_id": 2,
+                                            "tanggal": "2025-05-06",
+                                            "jumlah": 10,
+                                            "harga_beli": 15000
+                                        },
+                                        {
                                             "barang_id": 2,
-                                            "supplier_id": 1,
-                                            "tanggal": "2024-04-30",
+                                            "suplier_id": 3,
+                                            "tanggal": "2025-05-05",
                                             "jumlah": 5,
-                                            "harga_jual": 100000
+                                            "harga_beli": 20000
                                         }
                                     ]
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Transaksi Masuk"
-                ],
-                "summary": "Create a new transaksi masuk",
-                "description": "Add a new transaksi masuk record",
-                "operationId": "createTransaksiMasuk",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "barang_id",
-                                    "supplier_id",
-                                    "tanggal",
-                                    "jumlah",
-                                    "harga_jual"
-                                ],
-                                "properties": {
-                                    "barang_id": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "supplier_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "tanggal": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2024-04-30"
-                                    },
-                                    "jumlah": {
-                                        "type": "integer",
-                                        "example": 5
-                                    },
-                                    "harga_jual": {
-                                        "type": "number",
-                                        "example": 100000
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Transaksi masuk created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Transaksi Masuk created successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "barang_id": 2,
-                                        "supplier_id": 1,
-                                        "tanggal": "2024-04-30",
-                                        "jumlah": 5,
-                                        "harga_jual": 100000
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/transaksi-masuk/{id}": {
-            "put": {
-                "tags": [
-                    "Transaksi Masuk"
-                ],
-                "summary": "Update a transaksi masuk",
-                "description": "Update an existing transaksi masuk",
-                "operationId": "updateTransaksiMasuk",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "barang_id": {
-                                        "type": "integer",
-                                        "example": 3
-                                    },
-                                    "supplier_id": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "tanggal": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2024-05-01"
-                                    },
-                                    "jumlah": {
-                                        "type": "integer",
-                                        "example": 10
-                                    },
-                                    "harga_jual": {
-                                        "type": "number",
-                                        "example": 120000
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Transaksi Masuk updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Transaksi Masuk updated successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "barang_id": 3,
-                                        "supplier_id": 2,
-                                        "tanggal": "2024-05-01",
-                                        "jumlah": 10,
-                                        "harga_jual": 120000
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Transaksi Masuk"
-                ],
-                "summary": "Delete a transaksi Masuk",
-                "description": "Delete a transaksi masuk record by ID",
-                "operationId": "deleteTransaksiMasuk",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Transaksi Masuk deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Transaksi Masuk deleted successfully"
                                 }
                             }
                         }
@@ -1266,10 +1042,6 @@
         {
             "name": "Transaksi Keluar",
             "description": "Transaksi Keluar"
-        },
-        {
-            "name": "Transaksi masuk",
-            "description": "Transaksi masuk"
         },
         {
             "name": "Transaksi Masuk",

@@ -39,6 +39,60 @@ class BarangController extends Controller
             'data' => $barang
         ]);
     }
+        /**
+     * @OA\Get(
+     *     path="/barang/{id}",
+     *     tags={"Barang"},
+     *     operationId="getBarangById",
+     *     summary="Get barang by ID",
+     *     description="Retrieve a single barang record by its ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Barang retrieved successfully",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Barang retrieved successfully",
+     *                 "data": {"id": 1, "nama": "Mouse", "kategori_id": 2, "harga": 50000, "jumlah": 10}
+     *             }
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Barang not found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "message": "Barang not found"
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function show($id)
+    {
+        $barang = Barang::find($id);
+
+        if (!$barang) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Barang retrieved successfully',
+            'data' => $barang
+        ]);
+    }
+
 
     /**
      * @OA\Post(

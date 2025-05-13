@@ -1,158 +1,167 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
 use App\Models\Transaksi_masuk;
-use App\Models\Barang;
-
-
-
 use Illuminate\Http\Request;
 
 class Transaksi_masukController extends Controller
 {
-    public function index()
     /**
- * @OA\Get(
- *     path="/transaksi-masuk",
- *     tags={"Transaksi Masuk"},
- *     operationId="listTransaksiMasuk",
- *     summary="List of Transaksi Masuk",
- *     description="Retrieve a list of incoming transactions",
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             example={
- *                 "success": true,
- *                 "message": "Successfully retrieved incoming transactions",
- *                 "data": {
- *                     {
- *                         "barang_id": 1,
- *                         "suplier_id": 2,
- *                         "tanggal": "2025-05-06",
- *                         "jumlah": 10,
- *                         "harga_beli": 15000
- *                     },
- *                     {
- *                         "barang_id": 2,
- *                         "suplier_id": 3,
- *                         "tanggal": "2025-05-05",
- *                         "jumlah": 5,
- *                         "harga_beli": 20000
- *                     }
- *                 }
- *             }
- *         )
- *     )
- * )
- */
-
+     * @OA\Get(
+     *     path="/transaksi-masuk",
+     *     tags={"Transaksi masuk"},
+     *     operationId="listTransaksiMasuk",
+     *     summary="List of Transaksi Masuk",
+     *     description="Retrieve a list of transaksi masuk",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Successfully retrieved transaksi masuk",
+     *                 "data": {
+     *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                 }
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function index()
     {
-        $transaksiMasuks = Transaksi_masuk::with('barang', 'supplier')->get();
-
+        $transaksi = Transaksi_masuk::all();
         return response()->json([
-            'status' => 200,
-            'message' => 'Data transaksi masuk berhasil diambil.',
-            'data' => $transaksiMasuks
-        ], 200);
+            'success' => true,
+           'message' => 'Successfully retrieved transaksi masuk',
+            'data' => $transaksi
+        ]);
     }
 
-    
+    /**
+     * @OA\Post(
+     *     path="/transaksi-masuk",
+     *     tags={"Transaksi Masuk"},
+     *     operationId="createTransaksiMasuk",
+     *     summary="Create a new transaksi masuk",
+     *     description="Add a new transaksi masuk record",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"barang_id","supplier_id","tanggal","jumlah","harga_jual"},
+     *             @OA\Property(property="barang_id", type="integer", example=2),
+     *             @OA\Property(property="supplier_id", type="integer", example=1),
+     *             @OA\Property(property="tanggal", type="string", format="date", example="2024-04-30"),
+     *             @OA\Property(property="jumlah", type="integer", example=5),
+     *             @OA\Property(property="harga_jual", type="number", example=100000)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Transaksi masuk created successfully",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Transaksi Masuk created successfully",
+     *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *             }
+     *         )
+     *     )
+     * )
+     */
     public function store(Request $request)
-{
-    $request->validate([
-        'barang_id' => 'required|exists:barangs,id',
-        'supplier_id' => 'required|exists:suppliers,id',
-        'tanggal' => 'required|date',
-        'jumlah' => 'required|integer|min:1',
-        'harga_beli' => 'required|integer|min:1',
-    ]);
-
-    
-    $transaksi = Transaksi_masuk::create($request->all());
-
-    
-    $barang = Barang::find($request->barang_id);
-    $barang->jumlah += $request->jumlah; 
-    $barang->save();
-
-    return response()->json([
-        'status' => 201,
-        'message' => 'Transaksi masuk berhasil.',
-        'data' => $transaksi
-    ], 201);
-}
-
-
-    
-    public function show($id)
     {
-        $transaksiMasuk = Transaksi_masuk::with('barang', 'supplier')->find($id);
-
-        if (!$transaksiMasuk) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi masuk tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
+        $transaksi = Transaksi_masuk::create($request->all());
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Data transaksi masuk berhasil diambil.',
-            'data' => $transaksiMasuk
-        ], 200);
+            'success' => true,
+            'message' => 'Transaksi Masuk created successfully',
+            'data' => $transaksi
+        ], 201);
     }
 
-    
+    /**
+     * @OA\Put(
+     *     path="/transaksi-masuk/{id}",
+     *     tags={"Transaksi Masuk"},
+     *     operationId="updateTransaksiMasuk",
+     *     summary="Update a transaksi masuk",
+     *     description="Update an existing transaksi masuk",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="barang_id", type="integer", example=3),
+     *             @OA\Property(property="supplier_id", type="integer", example=2),
+     *             @OA\Property(property="tanggal", type="string", format="date", example="2024-05-01"),
+     *             @OA\Property(property="jumlah", type="integer", example=10),
+     *             @OA\Property(property="harga_jual", type="number", example=120000)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Transaksi Masuk updated successfully",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Transaksi Masuk updated successfully",
+     *                 "data": {"id": 1, "barang_id": 3, "supplier_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
+     *             }
+     *         )
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
-        $transaksiMasuk = Transaksi_masuk::find($id);
-
-        if (!$transaksiMasuk) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi masuk tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
-        $request->validate([
-            'barang_id' => 'exists:barangs,id',
-            'supplier_id' => 'exists:suppliers,id',
-            'tanggal' => 'date',
-            'jumlah' => 'integer|min:1',
-            'harga_beli' => 'integer|min:0'
-        ]);
-
-        $transaksiMasuk->update($request->all());
+        $transaksi = Transaksi_masuk::findOrFail($id);
+        $transaksi->update($request->all());
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi masuk berhasil diperbarui.',
-            'data' => $transaksiMasuk
-        ], 200);
+            'success' => true,
+            'message' => 'Transaksi Masuk updated successfully',
+            'data' => $transaksi
+        ]);
     }
 
-    
+    /**
+     * @OA\Delete(
+     *     path="/transaksi-masuk/{id}",
+     *     tags={"Transaksi Masuk"},
+     *     operationId="deleteTransaksiMasuk",
+     *     summary="Delete a transaksi Masuk",
+     *     description="Delete a transaksi masuk record by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Transaksi Masuk deleted successfully",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Transaksi Masuk deleted successfully"
+     *             }
+     *         )
+     *     )
+     * )
+     */
     public function destroy($id)
     {
-        $transaksiMasuk = Transaksi_masuk::find($id);
-
-        if (!$transaksiMasuk) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Transaksi masuk tidak ditemukan.',
-                'data' => null
-            ], 404);
-        }
-
-        $transaksiMasuk->delete();
+        $transaksi = Transaksi_masuk::findOrFail($id);
+        $transaksi->delete();
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Transaksi masuk berhasil dihapus.',
-            'data' => null
-        ], 200);
+            'success' => true,
+            'message' => 'Transaksi Masuk deleted successfully'
+        ]);
     }
 }

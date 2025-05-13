@@ -23,7 +23,7 @@ class Transaksi_keluarController extends Controller
      *                 "success": true,
      *                 "message": "Successfully retrieved transaksi keluar",
      *                 "data": {
-     *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                     {"id": 1, "barang_id": 2, "pelanggan_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
      *                 }
      *             }
      *         )
@@ -50,9 +50,9 @@ class Transaksi_keluarController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"barang_id","supplier_id","tanggal","jumlah","harga_jual"},
+     *             required={"barang_id","pelanggan_id","tanggal","jumlah","harga_jual"},
      *             @OA\Property(property="barang_id", type="integer", example=2),
-     *             @OA\Property(property="supplier_id", type="integer", example=1),
+     *             @OA\Property(property="pelanggan_id", type="integer", example=1),
      *             @OA\Property(property="tanggal", type="string", format="date", example="2024-04-30"),
      *             @OA\Property(property="jumlah", type="integer", example=5),
      *             @OA\Property(property="harga_jual", type="number", example=100000)
@@ -65,7 +65,7 @@ class Transaksi_keluarController extends Controller
      *             example={
      *                 "success": true,
      *                 "message": "Transaksi Keluar created successfully",
-     *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                 "data": {"id": 1, "barang_id": 2, "pelanggan_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
      *             }
      *         )
      *     )
@@ -98,7 +98,7 @@ class Transaksi_keluarController extends Controller
      *     @OA\RequestBody(
      *         @OA\JsonContent(
      *             @OA\Property(property="barang_id", type="integer", example=3),
-     *             @OA\Property(property="supplier_id", type="integer", example=2),
+     *             @OA\Property(property="pelanggan_id", type="integer", example=2),
      *             @OA\Property(property="tanggal", type="string", format="date", example="2024-05-01"),
      *             @OA\Property(property="jumlah", type="integer", example=10),
      *             @OA\Property(property="harga_jual", type="number", example=120000)
@@ -111,7 +111,7 @@ class Transaksi_keluarController extends Controller
      *             example={
      *                 "success": true,
      *                 "message": "Transaksi Keluar updated successfully",
-     *                 "data": {"id": 1, "barang_id": 3, "supplier_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
+     *                 "data": {"id": 1, "barang_id": 3, "pelanggan_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
      *             }
      *         )
      *     )
