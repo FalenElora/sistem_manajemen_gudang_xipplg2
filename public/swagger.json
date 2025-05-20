@@ -117,58 +117,6 @@
             }
         },
         "/barang/{id}": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Get barang by ID",
-                "description": "Retrieve a single barang record by its ID",
-                "operationId": "getBarangById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Barang retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang retrieved successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "nama": "Mouse",
-                                        "kategori_id": 2,
-                                        "harga": 50000,
-                                        "jumlah": 10
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Barang not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "Barang not found"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "put": {
                 "tags": [
                     "Barang"
@@ -271,327 +219,6 @@
                 }
             }
         },
-        "/barang/kategori/{kategori_id}": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Get barang by kategori ID",
-                "description": "Retrieve a list of barang filtered by kategori_id",
-                "operationId": "getBarangByKategori",
-                "parameters": [
-                    {
-                        "name": "kategori_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 2
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Barang retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang retrieved by kategori",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Mouse",
-                                            "kategori_id": 2,
-                                            "harga": 50000,
-                                            "jumlah": 10
-                                        },
-                                        {
-                                            "id": 3,
-                                            "nama": "Keyboard",
-                                            "kategori_id": 2,
-                                            "harga": 75000,
-                                            "jumlah": 5
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No barang found in this kategori",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No barang found in this kategori"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/barang/search": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Search barang by name",
-                "description": "Retrieve a list of barang based on a partial match of the name",
-                "operationId": "searchBarangByName",
-                "parameters": [
-                    {
-                        "name": "nama",
-                        "in": "query",
-                        "description": "Nama barang yang ingin dicari",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "mouse"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Barang search result",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Search results",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Mouse Logitech",
-                                            "kategori_id": 2,
-                                            "harga": 50000,
-                                            "jumlah": 10
-                                        },
-                                        {
-                                            "id": 2,
-                                            "nama": "Mousepad",
-                                            "kategori_id": 3,
-                                            "harga": 15000,
-                                            "jumlah": 5
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No matching barang found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No matching barang found"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/barang/stok/kurang-dari-100": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Get barang with stock less than 100",
-                "description": "Retrieve all barang where jumlah (stock) is less than 100",
-                "operationId": "getBarangWithLowStock",
-                "responses": {
-                    "200": {
-                        "description": "Barang with low stock retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang with stock less than 100",
-                                    "data": [
-                                        {
-                                            "id": 2,
-                                            "nama": "Keyboard",
-                                            "kategori_id": 2,
-                                            "harga": 75000,
-                                            "jumlah": 20
-                                        },
-                                        {
-                                            "id": 5,
-                                            "nama": "Cable",
-                                            "kategori_id": 3,
-                                            "harga": 10000,
-                                            "jumlah": 50
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No barang with low stock found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No barang found with stock less than 100"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/barang/sort/harga": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Sort barang by harga",
-                "description": "Sort barang from cheapest to most expensive or vice versa",
-                "operationId": "sortBarangByHarga",
-                "parameters": [
-                    {
-                        "name": "order",
-                        "in": "query",
-                        "description": "Sort order: asc (termurah) or desc (termahal)",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "asc"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List sorted by price",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang sorted by price",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Mouse",
-                                            "harga": 10000
-                                        },
-                                        {
-                                            "id": 2,
-                                            "nama": "Keyboard",
-                                            "harga": 50000
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/barang/sort/nama": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Sort barang by nama",
-                "description": "Sort barang from A to Z or Z to A",
-                "operationId": "sortBarangByNama",
-                "parameters": [
-                    {
-                        "name": "order",
-                        "in": "query",
-                        "description": "Sort order: asc (A-Z) or desc (Z-A)",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "asc"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List sorted by nama",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang sorted by nama",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Keyboard"
-                                        },
-                                        {
-                                            "id": 2,
-                                            "nama": "Mouse"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/barang/sort/jumlah": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Sort barang by jumlah stok",
-                "description": "Sort barang berdasarkan jumlah stok dari sedikit ke banyak atau sebaliknya",
-                "operationId": "sortBarangByJumlah",
-                "parameters": [
-                    {
-                        "name": "order",
-                        "in": "query",
-                        "description": "Sort order: asc (sedikit ke banyak) atau desc (banyak ke sedikit)",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "asc"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Barang sorted by jumlah",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Barang sorted by jumlah",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Mouse",
-                                            "jumlah": 5
-                                        },
-                                        {
-                                            "id": 2,
-                                            "nama": "Keyboard",
-                                            "jumlah": 20
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/category": {
             "get": {
                 "tags": [
@@ -672,55 +299,6 @@
             }
         },
         "/category/{id}": {
-            "get": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Get category by ID",
-                "description": "Retrieve a single category by its ID",
-                "operationId": "getCategoryById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Category found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Category retrieved successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "name": "Fiction"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Category not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "Category not found"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "put": {
                 "tags": [
                     "Category"
@@ -811,63 +389,6 @@
                 }
             }
         },
-<<<<<<< HEAD
-=======
-        "/category/search": {
-            "get": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Search categories by name",
-                "description": "Retrieve categories that match a given name",
-                "operationId": "searchCategoryByName",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Category name or partial match",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Fiction"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Search results",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Categories found",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "name": "Fiction"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No categories found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No categories found"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
         "/pelanggan": {
             "get": {
                 "tags": [
@@ -1259,7 +780,7 @@
                                         {
                                             "id": 1,
                                             "barang_id": 2,
-                                            "pelanggan_id": 1,
+                                            "supplier_id": 1,
                                             "tanggal": "2024-04-30",
                                             "jumlah": 5,
                                             "harga_jual": 100000
@@ -1285,7 +806,7 @@
                             "schema": {
                                 "required": [
                                     "barang_id",
-                                    "pelanggan_id",
+                                    "supplier_id",
                                     "tanggal",
                                     "jumlah",
                                     "harga_jual"
@@ -1295,7 +816,7 @@
                                         "type": "integer",
                                         "example": 2
                                     },
-                                    "pelanggan_id": {
+                                    "supplier_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
@@ -1330,7 +851,7 @@
                                     "data": {
                                         "id": 1,
                                         "barang_id": 2,
-                                        "pelanggan_id": 1,
+                                        "supplier_id": 1,
                                         "tanggal": "2024-04-30",
                                         "jumlah": 5,
                                         "harga_jual": 100000
@@ -1370,7 +891,7 @@
                                         "type": "integer",
                                         "example": 3
                                     },
-                                    "pelanggan_id": {
+                                    "supplier_id": {
                                         "type": "integer",
                                         "example": 2
                                     },
@@ -1405,7 +926,7 @@
                                     "data": {
                                         "id": 1,
                                         "barang_id": 3,
-                                        "pelanggan_id": 2,
+                                        "supplier_id": 2,
                                         "tanggal": "2024-05-01",
                                         "jumlah": 10,
                                         "harga_jual": 120000
@@ -1453,10 +974,10 @@
         "/transaksi-masuk": {
             "get": {
                 "tags": [
-                    "Transaksi masuk"
+                    "Transaksi Masuk"
                 ],
                 "summary": "List of Transaksi Masuk",
-                "description": "Retrieve a list of transaksi masuk",
+                "description": "Retrieve a list of incoming transactions",
                 "operationId": "listTransaksiMasuk",
                 "responses": {
                     "200": {
@@ -1466,225 +987,23 @@
                                 "schema": {},
                                 "example": {
                                     "success": true,
-                                    "message": "Successfully retrieved transaksi masuk",
+                                    "message": "Successfully retrieved incoming transactions",
                                     "data": [
                                         {
-                                            "id": 1,
+                                            "barang_id": 1,
+                                            "suplier_id": 2,
+                                            "tanggal": "2025-05-06",
+                                            "jumlah": 10,
+                                            "harga_beli": 15000
+                                        },
+                                        {
                                             "barang_id": 2,
-                                            "supplier_id": 1,
-                                            "tanggal": "2024-04-30",
+                                            "suplier_id": 3,
+                                            "tanggal": "2025-05-05",
                                             "jumlah": 5,
-                                            "harga_jual": 100000
+                                            "harga_beli": 20000
                                         }
                                     ]
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Transaksi Masuk"
-                ],
-                "summary": "Create a new transaksi masuk",
-                "description": "Add a new transaksi masuk record",
-                "operationId": "createTransaksiMasuk",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "barang_id",
-                                    "supplier_id",
-                                    "tanggal",
-                                    "jumlah",
-                                    "harga_jual"
-                                ],
-                                "properties": {
-                                    "barang_id": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "supplier_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "tanggal": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2024-04-30"
-                                    },
-                                    "jumlah": {
-                                        "type": "integer",
-                                        "example": 5
-                                    },
-                                    "harga_jual": {
-                                        "type": "number",
-                                        "example": 100000
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Transaksi masuk created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Transaksi Masuk created successfully",
-                                    "data": {
-                                        "id": 1,
-                                        "barang_id": 2,
-                                        "supplier_id": 1,
-                                        "tanggal": "2024-04-30",
-                                        "jumlah": 5,
-                                        "harga_jual": 100000
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/transaksi-masuk/{id}": {
-            "put": {
-                "tags": [
-                    "Transaksi Masuk"
-                ],
-<<<<<<< HEAD
-                "summary": "Update a transaksi keluar",
-                "description": "Update an existing transaksi keluar",
-                "operationId": "updateTransaksiKeluar",
-=======
-                "summary": "Update a transaksi masuk",
-                "description": "Update an existing transaksi masuk",
-                "operationId": "updateTransaksiMasuk",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "barang_id": {
-                                        "type": "integer",
-                                        "example": 3
-                                    },
-                                    "supplier_id": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "tanggal": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2024-05-01"
-                                    },
-                                    "jumlah": {
-                                        "type": "integer",
-                                        "example": 10
-                                    },
-                                    "harga_jual": {
-                                        "type": "number",
-                                        "example": 120000
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-<<<<<<< HEAD
-                        "description": "Transaksi Keluar updated successfully",
-=======
-                        "description": "Transaksi Masuk updated successfully",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-<<<<<<< HEAD
-                                    "message": "Transaksi Keluar updated successfully",
-=======
-                                    "message": "Transaksi Masuk updated successfully",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
-                                    "data": {
-                                        "id": 1,
-                                        "barang_id": 3,
-                                        "supplier_id": 2,
-                                        "tanggal": "2024-05-01",
-                                        "jumlah": 10,
-                                        "harga_jual": 120000
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-<<<<<<< HEAD
-                    "Transaksi Keluar"
-                ],
-                "summary": "Delete a transaksi keluar",
-                "description": "Delete a transaksi keluar record by ID",
-                "operationId": "deleteTransaksiKeluar",
-=======
-                    "Transaksi Masuk"
-                ],
-                "summary": "Delete a transaksi Masuk",
-                "description": "Delete a transaksi masuk record by ID",
-                "operationId": "deleteTransaksiMasuk",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-<<<<<<< HEAD
-                        "description": "Transaksi Keluar deleted successfully",
-=======
-                        "description": "Transaksi Masuk deleted successfully",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-<<<<<<< HEAD
-                                    "message": "Transaksi Keluar deleted successfully"
-=======
-                                    "message": "Transaksi Masuk deleted successfully"
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                                 }
                             }
                         }
@@ -1723,17 +1042,10 @@
         {
             "name": "Transaksi Keluar",
             "description": "Transaksi Keluar"
-<<<<<<< HEAD
-=======
-        },
-        {
-            "name": "Transaksi masuk",
-            "description": "Transaksi masuk"
         },
         {
             "name": "Transaksi Masuk",
             "description": "Transaksi Masuk"
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
         }
     ]
 }

@@ -3,27 +3,27 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transaksi_keluar;
+use App\Models\Transaksi_masuk;
 use Illuminate\Http\Request;
 
-class Transaksi_keluarController extends Controller
+class Transaksi_masukController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/transaksi-keluar",
-     *     tags={"Transaksi Keluar"},
-     *     operationId="listTransaksiKeluar",
-     *     summary="List of Transaksi Keluar",
-     *     description="Retrieve a list of transaksi keluar",
+     *     path="/transaksi-masuk",
+     *     tags={"Transaksi masuk"},
+     *     operationId="listTransaksiMasuk",
+     *     summary="List of Transaksi Masuk",
+     *     description="Retrieve a list of transaksi masuk",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *             example={
      *                 "success": true,
-     *                 "message": "Successfully retrieved transaksi keluar",
+     *                 "message": "Successfully retrieved transaksi masuk",
      *                 "data": {
-     *                     {"id": 1, "barang_id": 2, "pelanggan_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
      *                 }
      *             }
      *         )
@@ -32,27 +32,27 @@ class Transaksi_keluarController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi_keluar::all();
+        $transaksi = Transaksi_masuk::all();
         return response()->json([
             'success' => true,
-            'message' => 'Successfully retrieved transaksi keluar',
+           'message' => 'Successfully retrieved transaksi masuk',
             'data' => $transaksi
         ]);
     }
 
     /**
      * @OA\Post(
-     *     path="/transaksi-keluar",
-     *     tags={"Transaksi Keluar"},
-     *     operationId="createTransaksiKeluar",
-     *     summary="Create a new transaksi keluar",
-     *     description="Add a new transaksi keluar record",
+     *     path="/transaksi-masuk",
+     *     tags={"Transaksi Masuk"},
+     *     operationId="createTransaksiMasuk",
+     *     summary="Create a new transaksi masuk",
+     *     description="Add a new transaksi masuk record",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"barang_id","pelanggan_id","tanggal","jumlah","harga_jual"},
+     *             required={"barang_id","supplier_id","tanggal","jumlah","harga_jual"},
      *             @OA\Property(property="barang_id", type="integer", example=2),
-     *             @OA\Property(property="pelanggan_id", type="integer", example=1),
+     *             @OA\Property(property="supplier_id", type="integer", example=1),
      *             @OA\Property(property="tanggal", type="string", format="date", example="2024-04-30"),
      *             @OA\Property(property="jumlah", type="integer", example=5),
      *             @OA\Property(property="harga_jual", type="number", example=100000)
@@ -60,12 +60,12 @@ class Transaksi_keluarController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Transaksi Keluar created successfully",
+     *         description="Transaksi masuk created successfully",
      *         @OA\JsonContent(
      *             example={
      *                 "success": true,
-     *                 "message": "Transaksi Keluar created successfully",
-     *                 "data": {"id": 1, "barang_id": 2, "pelanggan_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                 "message": "Transaksi Masuk created successfully",
+     *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
      *             }
      *         )
      *     )
@@ -73,22 +73,22 @@ class Transaksi_keluarController extends Controller
      */
     public function store(Request $request)
     {
-        $transaksi = Transaksi_keluar::create($request->all());
+        $transaksi = Transaksi_masuk::create($request->all());
 
         return response()->json([
             'success' => true,
-            'message' => 'Transaksi Keluar created successfully',
+            'message' => 'Transaksi Masuk created successfully',
             'data' => $transaksi
         ], 201);
     }
 
     /**
      * @OA\Put(
-     *     path="/transaksi-keluar/{id}",
-     *     tags={"Transaksi Keluar"},
-     *     operationId="updateTransaksiKeluar",
-     *     summary="Update a transaksi keluar",
-     *     description="Update an existing transaksi keluar",
+     *     path="/transaksi-masuk/{id}",
+     *     tags={"Transaksi Masuk"},
+     *     operationId="updateTransaksiMasuk",
+     *     summary="Update a transaksi masuk",
+     *     description="Update an existing transaksi masuk",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -98,7 +98,7 @@ class Transaksi_keluarController extends Controller
      *     @OA\RequestBody(
      *         @OA\JsonContent(
      *             @OA\Property(property="barang_id", type="integer", example=3),
-     *             @OA\Property(property="pelanggan_id", type="integer", example=2),
+     *             @OA\Property(property="supplier_id", type="integer", example=2),
      *             @OA\Property(property="tanggal", type="string", format="date", example="2024-05-01"),
      *             @OA\Property(property="jumlah", type="integer", example=10),
      *             @OA\Property(property="harga_jual", type="number", example=120000)
@@ -106,12 +106,12 @@ class Transaksi_keluarController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Transaksi Keluar updated successfully",
+     *         description="Transaksi Masuk updated successfully",
      *         @OA\JsonContent(
      *             example={
      *                 "success": true,
-     *                 "message": "Transaksi Keluar updated successfully",
-     *                 "data": {"id": 1, "barang_id": 3, "pelanggan_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
+     *                 "message": "Transaksi Masuk updated successfully",
+     *                 "data": {"id": 1, "barang_id": 3, "supplier_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
      *             }
      *         )
      *     )
@@ -119,23 +119,23 @@ class Transaksi_keluarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $transaksi = Transaksi_keluar::findOrFail($id);
+        $transaksi = Transaksi_masuk::findOrFail($id);
         $transaksi->update($request->all());
 
         return response()->json([
             'success' => true,
-            'message' => 'Transaksi Keluar updated successfully',
+            'message' => 'Transaksi Masuk updated successfully',
             'data' => $transaksi
         ]);
     }
 
     /**
      * @OA\Delete(
-     *     path="/transaksi-keluar/{id}",
-     *     tags={"Transaksi Keluar"},
-     *     operationId="deleteTransaksiKeluar",
-     *     summary="Delete a transaksi keluar",
-     *     description="Delete a transaksi keluar record by ID",
+     *     path="/transaksi-masuk/{id}",
+     *     tags={"Transaksi Masuk"},
+     *     operationId="deleteTransaksiMasuk",
+     *     summary="Delete a transaksi Masuk",
+     *     description="Delete a transaksi masuk record by ID",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -144,11 +144,11 @@ class Transaksi_keluarController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Transaksi Keluar deleted successfully",
+     *         description="Transaksi Masuk deleted successfully",
      *         @OA\JsonContent(
      *             example={
      *                 "success": true,
-     *                 "message": "Transaksi Keluar deleted successfully"
+     *                 "message": "Transaksi Masuk deleted successfully"
      *             }
      *         )
      *     )
@@ -156,12 +156,12 @@ class Transaksi_keluarController extends Controller
      */
     public function destroy($id)
     {
-        $transaksi = Transaksi_keluar::findOrFail($id);
+        $transaksi = Transaksi_masuk::findOrFail($id);
         $transaksi->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Transaksi Keluar deleted successfully'
+            'message' => 'Transaksi Masuk deleted successfully'
         ]);
     }
 }

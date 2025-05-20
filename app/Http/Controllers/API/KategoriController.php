@@ -80,6 +80,132 @@ class KategoriController extends Controller
             ]
         ], 201);
     }
+    /**
+ * @OA\Get(
+ *     path="/category/{id}",
+ *     tags={"Category"},
+ *     operationId="getCategoryById",
+ *     summary="Get category by ID",
+ *     description="Retrieve a single category by its ID",
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Category found",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Category retrieved successfully",
+ *                 "data": {"id": 1, "name": "Fiction"}
+ *             }
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Category not found",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": false,
+ *                 "message": "Category not found"
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function getCategoryById($id)
+{
+    // Contoh implementasi tanpa database
+    $categories = [
+        1 => ['id' => 1, 'name' => 'Fiction'],
+        2 => ['id' => 2, 'name' => 'Non-Fiction']
+    ];
+
+    if (isset($categories[$id])) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Category retrieved successfully',
+            'data' => $categories[$id]
+        ]);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Category not found'
+        ], 404);
+    }
+}
+/**
+ * @OA\Get(
+ *     path="/category/search",
+ *     tags={"Category"},
+ *     operationId="searchCategoryByName",
+ *     summary="Search categories by name",
+ *     description="Retrieve categories that match a given name",
+ *     @OA\Parameter(
+ *         name="name",
+ *         in="query",
+ *         required=true,
+ *         description="Category name or partial match",
+ *         @OA\Schema(type="string", example="Fiction")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Search results",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Categories found",
+ *                 "data": {
+ *                     {"id": 1, "name": "Fiction"}
+ *                 }
+ *             }
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No categories found",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": false,
+ *                 "message": "No categories found"
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function searchByName(Request $request)
+{
+    $name = strtolower($request->query('name'));
+
+    // Contoh data statis (bisa diganti pakai database nanti)
+    $categories = [
+        ['id' => 1, 'name' => 'Fiction'],
+        ['id' => 2, 'name' => 'Non-Fiction'],
+        ['id' => 3, 'name' => 'Science'],
+    ];
+
+    $results = array_filter($categories, function ($category) use ($name) {
+        return str_contains(strtolower($category['name']), $name);
+    });
+
+    if (count($results) > 0) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Categories found',
+            'data' => array_values($results)
+        ]);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'No categories found'
+        ], 404);
+    }
+}
+
+
 
     /**
      * @OA\Put(
