@@ -1242,6 +1242,58 @@
             }
         },
         "/supplier/{id}": {
+            "get": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Get supplier by ID",
+                "description": "Retrieve a single supplier by its ID",
+                "operationId": "getSupplierById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier retrieved successfully.",
+                                    "data": {
+                                        "id": 1,
+                                        "nama_supplier": "PT Maju",
+                                        "kontak_selanggan": "0823456",
+                                        "alamat": "Jl. Merdeka"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Supplier not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 404,
+                                    "message": "Supplier not found.",
+                                    "data": null
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "put": {
                 "tags": [
                     "Supplier"
@@ -1332,6 +1384,62 @@
                                 "example": {
                                     "status": 200,
                                     "message": "Supplier deleted successfully.",
+                                    "data": null
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/supplier/search/{nama_supplier}": {
+            "get": {
+                "tags": [
+                    "Supplier"
+                ],
+                "summary": "Search supplier by name",
+                "description": "Search supplier(s) whose name matches or contains the given string",
+                "operationId": "searchSupplierByName",
+                "parameters": [
+                    {
+                        "name": "nama_supplier",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Maju"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier(s) found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 200,
+                                    "message": "Supplier(s) found.",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "nama_supplier": "PT Maju",
+                                            "kontak_selanggan": "0823456",
+                                            "alamat": "Jl. Merdeka"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No supplier found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": 404,
+                                    "message": "No supplier found.",
                                     "data": null
                                 }
                             }
@@ -1656,7 +1764,119 @@
                 }
             }
         },
+        "/transaksi-masuk/search": {
+            "get": {
+                "tags": [
+                    "Transaksi Masuk"
+                ],
+                "summary": "Search transaksi masuk by date",
+                "description": "Search transaksi masuk records by exact date",
+                "operationId": "searchTransaksiMasukByTanggal",
+                "parameters": [
+                    {
+                        "name": "tanggal",
+                        "in": "query",
+                        "description": "Tanggal transaksi dalam format YYYY-MM-DD",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-04-30"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Matching transaksi masuk found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Masuk found",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "barang_id": 2,
+                                            "supplier_id": 1,
+                                            "tanggal": "2024-04-30",
+                                            "jumlah": 5,
+                                            "harga_jual": 100000
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No matching transaksi masuk found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "message": "No transaksi masuk found on this date"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/transaksi-masuk/{id}": {
+            "get": {
+                "tags": [
+                    "Transaksi Masuk"
+                ],
+                "summary": "Get transaksi masuk by ID",
+                "description": "Retrieve a single transaksi masuk record by its ID",
+                "operationId": "getTransaksiMasukById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaksi Masuk found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Masuk found",
+                                    "data": {
+                                        "id": 1,
+                                        "barang_id": 2,
+                                        "supplier_id": 1,
+                                        "tanggal": "2024-04-30",
+                                        "jumlah": 5,
+                                        "harga_jual": 100000
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Transaksi Masuk not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "message": "Transaksi Masuk not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "put": {
                 "tags": [
                     "Transaksi Masuk"

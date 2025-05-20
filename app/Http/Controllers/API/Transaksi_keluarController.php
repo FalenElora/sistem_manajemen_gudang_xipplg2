@@ -39,6 +39,7 @@ class Transaksi_keluarController extends Controller
             'data' => $transaksi
         ]);
     }
+    
 
     /**
      * @OA\Post(
