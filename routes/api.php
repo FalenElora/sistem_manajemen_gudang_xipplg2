@@ -8,6 +8,7 @@ use App\Http\Controllers\API\SupplierController;
 use App\Http\Controllers\Transaksi_masukController;
 use App\Http\Controllers\Transaksi_keluarController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
 
 
 /* 
@@ -47,4 +48,7 @@ Route::group([], function () {
     Route::put('suppliers/{id}', [SupplierController::class, 'update']);
     Route::delete('suppliers/{id}', [SupplierController::class, 'destroy']);
 });
+
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+
 

@@ -169,6 +169,12 @@ return [
          * API security definitions. Will be generated into documentation file.
         */
         'securityDefinitions' => [
+            'sanctum' => [ // Nama skema (bebas, tapi konsisten di anotasi @OA)
+            'type' => 'apiKey',
+            'description' => 'Masukkan token Anda dengan format: Bearer {token}',
+            'name' => 'Authorization', // Header tempat token dikirim
+            'in' => 'header',
+    ],
             'securitySchemes' => [
                 /*
                  * Examples of Security schemes

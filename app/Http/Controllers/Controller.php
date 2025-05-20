@@ -10,6 +10,18 @@ use Illuminate\Routing\Controller as BaseController;
 use OpenAPI\Attributes as OA;
 
 /**
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     description="Gunakan token Bearer dari login",
+ *     name="Authorization",
+ *     in="header",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     securityScheme="bearerAuth"
+ * )
+ */
+
+/**
  * @OA\Info(
  *     version="1.0.0",
  *     title="API Portal Berita",

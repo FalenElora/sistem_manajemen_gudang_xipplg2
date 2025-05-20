@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class Transaksi_masukController extends Controller
 {
+    
     /**
      * @OA\Get(
      *     path="/transaksi-masuk",
-     *     tags={"Transaksi masuk"},
+     *     tags={"Transaksi Masuk"},
      *     operationId="listTransaksiMasuk",
      *     summary="List of Transaksi Masuk",
+     *     security={{"bearerAuth":{}}},
      *     description="Retrieve a list of transaksi masuk",
      *     @OA\Response(
      *         response=200,
@@ -45,6 +47,7 @@ class Transaksi_masukController extends Controller
  *     tags={"Transaksi Masuk"},
  *     operationId="searchTransaksiMasukByTanggal",
  *     summary="Search transaksi masuk by date",
+ *     security={{"bearerAuth":{}}},
  *     description="Search transaksi masuk records by exact date",
  *     @OA\Parameter(
  *         name="tanggal",
@@ -103,6 +106,7 @@ public function searchByTanggal(Request $request)
  *     tags={"Transaksi Masuk"},
  *     operationId="getTransaksiMasukById",
  *     summary="Get transaksi masuk by ID",
+ *     security={{"bearerAuth":{}}},
  *     description="Retrieve a single transaksi masuk record by its ID",
  *     @OA\Parameter(
  *         name="id",
@@ -159,6 +163,7 @@ public function show($id)
      *     tags={"Transaksi Masuk"},
      *     operationId="createTransaksiMasuk",
      *     summary="Create a new transaksi masuk",
+     *     security={{"bearerAuth":{}}},
      *     description="Add a new transaksi masuk record",
      *     @OA\RequestBody(
      *         required=true,
@@ -201,6 +206,7 @@ public function show($id)
      *     tags={"Transaksi Masuk"},
      *     operationId="updateTransaksiMasuk",
      *     summary="Update a transaksi masuk",
+     *     security={{"bearerAuth":{}}},
      *     description="Update an existing transaksi masuk",
      *     @OA\Parameter(
      *         name="id",
@@ -248,6 +254,7 @@ public function show($id)
      *     tags={"Transaksi Masuk"},
      *     operationId="deleteTransaksiMasuk",
      *     summary="Delete a transaksi Masuk",
+     *     security={{"bearerAuth":{}}},
      *     description="Delete a transaksi masuk record by ID",
      *     @OA\Parameter(
      *         name="id",
