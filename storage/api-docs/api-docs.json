@@ -811,8 +811,6 @@
                 }
             }
         },
-<<<<<<< HEAD
-=======
         "/category/search": {
             "get": {
                 "tags": [
@@ -867,7 +865,6 @@
                 }
             }
         },
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
         "/pelanggan": {
             "get": {
                 "tags": [
@@ -956,6 +953,56 @@
             }
         },
         "/pelanggan/{id}": {
+            "get": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "Get pelanggan by ID",
+                "operationId": "getPelangganById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pelanggan retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Pelanggan retrieved successfully",
+                                    "data": {
+                                        "id": 1,
+                                        "nama": "Budi",
+                                        "kontak": "08123456789",
+                                        "alamat": "Jl. Merdeka 10"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pelanggan not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "message": "Pelanggan not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "put": {
                 "tags": [
                     "Pelanggan"
@@ -1043,6 +1090,61 @@
                                 "example": {
                                     "success": true,
                                     "message": "Pelanggan deleted successfully"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pelanggan/search": {
+            "get": {
+                "tags": [
+                    "Pelanggan"
+                ],
+                "summary": "Search pelanggan by name",
+                "operationId": "searchPelangganByName",
+                "parameters": [
+                    {
+                        "name": "nama",
+                        "in": "query",
+                        "description": "Nama pelanggan yang ingin dicari",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Budi"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pelanggan found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Search result",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "nama": "Budi",
+                                            "kontak": "08123456789",
+                                            "alamat": "Jl. Merdeka 10"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No pelanggan found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "message": "No pelanggan found"
                                 }
                             }
                         }
@@ -1559,15 +1661,9 @@
                 "tags": [
                     "Transaksi Masuk"
                 ],
-<<<<<<< HEAD
-                "summary": "Update a transaksi keluar",
-                "description": "Update an existing transaksi keluar",
-                "operationId": "updateTransaksiKeluar",
-=======
                 "summary": "Update a transaksi masuk",
                 "description": "Update an existing transaksi masuk",
                 "operationId": "updateTransaksiMasuk",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                 "parameters": [
                     {
                         "name": "id",
@@ -1613,21 +1709,13 @@
                 },
                 "responses": {
                     "200": {
-<<<<<<< HEAD
-                        "description": "Transaksi Keluar updated successfully",
-=======
                         "description": "Transaksi Masuk updated successfully",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
-<<<<<<< HEAD
-                                    "message": "Transaksi Keluar updated successfully",
-=======
                                     "message": "Transaksi Masuk updated successfully",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                                     "data": {
                                         "id": 1,
                                         "barang_id": 3,
@@ -1644,19 +1732,11 @@
             },
             "delete": {
                 "tags": [
-<<<<<<< HEAD
-                    "Transaksi Keluar"
-                ],
-                "summary": "Delete a transaksi keluar",
-                "description": "Delete a transaksi keluar record by ID",
-                "operationId": "deleteTransaksiKeluar",
-=======
                     "Transaksi Masuk"
                 ],
                 "summary": "Delete a transaksi Masuk",
                 "description": "Delete a transaksi masuk record by ID",
                 "operationId": "deleteTransaksiMasuk",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                 "parameters": [
                     {
                         "name": "id",
@@ -1670,21 +1750,13 @@
                 ],
                 "responses": {
                     "200": {
-<<<<<<< HEAD
-                        "description": "Transaksi Keluar deleted successfully",
-=======
                         "description": "Transaksi Masuk deleted successfully",
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
                                     "success": true,
-<<<<<<< HEAD
-                                    "message": "Transaksi Keluar deleted successfully"
-=======
                                     "message": "Transaksi Masuk deleted successfully"
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
                                 }
                             }
                         }
@@ -1723,8 +1795,6 @@
         {
             "name": "Transaksi Keluar",
             "description": "Transaksi Keluar"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "Transaksi masuk",
@@ -1733,7 +1803,6 @@
         {
             "name": "Transaksi Masuk",
             "description": "Transaksi Masuk"
->>>>>>> 53d2a1cd85b6d85552c844d8156bc4a552814a77
         }
     ]
 }
