@@ -92,6 +92,306 @@ class BarangController extends Controller
             'data' => $barang
         ]);
     }
+    /**
+ * @OA\Get(
+ *     path="/barang/kategori/{kategori_id}",
+ *     tags={"Barang"},
+ *     operationId="getBarangByKategori",
+ *     summary="Get barang by kategori ID",
+ *     description="Retrieve a list of barang filtered by kategori_id",
+ *     @OA\Parameter(
+ *         name="kategori_id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=2)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Barang retrieved successfully",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Barang retrieved by kategori",
+ *                 "data": {
+ *                     {"id": 1, "nama": "Mouse", "kategori_id": 2, "harga": 50000, "jumlah": 10},
+ *                     {"id": 3, "nama": "Keyboard", "kategori_id": 2, "harga": 75000, "jumlah": 5}
+ *                 }
+ *             }
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No barang found in this kategori",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": false,
+ *                 "message": "No barang found in this kategori"
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function getByKategori($kategori_id)
+{
+    $barang = Barang::where('kategori_id', $kategori_id)->get();
+
+    if ($barang->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No barang found in this kategori'
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Barang retrieved by kategori',
+        'data' => $barang
+    ]);
+}
+/**
+ * @OA\Get(
+ *     path="/barang/search",
+ *     tags={"Barang"},
+ *     operationId="searchBarangByName",
+ *     summary="Search barang by name",
+ *     description="Retrieve a list of barang based on a partial match of the name",
+ *     @OA\Parameter(
+ *         name="nama",
+ *         in="query",
+ *         required=true,
+ *         description="Nama barang yang ingin dicari",
+ *         @OA\Schema(type="string", example="mouse")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Barang search result",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Search results",
+ *                 "data": {
+ *                     {"id": 1, "nama": "Mouse Logitech", "kategori_id": 2, "harga": 50000, "jumlah": 10},
+ *                     {"id": 2, "nama": "Mousepad", "kategori_id": 3, "harga": 15000, "jumlah": 5}
+ *                 }
+ *             }
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No matching barang found",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": false,
+ *                 "message": "No matching barang found"
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function searchByName(Request $request)
+{
+    $nama = $request->query('nama');
+
+    if (!$nama) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Nama parameter is required'
+        ], 400);
+    }
+
+    $barang = Barang::where('nama', 'LIKE', '%' . $nama . '%')->get();
+
+    if ($barang->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No matching barang found'
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Search results',
+        'data' => $barang
+    ]);
+}
+/**
+ * @OA\Get(
+ *     path="/barang/stok/kurang-dari-100",
+ *     tags={"Barang"},
+ *     operationId="getBarangWithLowStock",
+ *     summary="Get barang with stock less than 100",
+ *     description="Retrieve all barang where jumlah (stock) is less than 100",
+ *     @OA\Response(
+ *         response=200,
+ *         description="Barang with low stock retrieved successfully",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Barang with stock less than 100",
+ *                 "data": {
+ *                     {"id": 2, "nama": "Keyboard", "kategori_id": 2, "harga": 75000, "jumlah": 20},
+ *                     {"id": 5, "nama": "Cable", "kategori_id": 3, "harga": 10000, "jumlah": 50}
+ *                 }
+ *             }
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No barang with low stock found",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": false,
+ *                 "message": "No barang found with stock less than 100"
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function lowStock()
+{
+    $barang = Barang::where('jumlah', '<', 100)->get();
+
+    if ($barang->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No barang found with stock less than 100'
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Barang with stock less than 100',
+        'data' => $barang
+    ]);
+}
+/**
+ * @OA\Get(
+ *     path="/barang/sort/harga",
+ *     tags={"Barang"},
+ *     operationId="sortBarangByHarga",
+ *     summary="Sort barang by harga",
+ *     description="Sort barang from cheapest to most expensive or vice versa",
+ *     @OA\Parameter(
+ *         name="order",
+ *         in="query",
+ *         description="Sort order: asc (termurah) or desc (termahal)",
+ *         required=false,
+ *         @OA\Schema(type="string", example="asc")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="List sorted by price",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Barang sorted by price",
+ *                 "data": {
+ *                     {"id": 1, "nama": "Mouse", "harga": 10000},
+ *                     {"id": 2, "nama": "Keyboard", "harga": 50000}
+ *                 }
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function sortByHarga(Request $request)
+{
+    $order = $request->query('order', 'asc'); // default: asc
+
+    $barang = Barang::orderBy('harga', $order)->get();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Barang sorted by price',
+        'data' => $barang
+    ]);
+}
+/**
+ * @OA\Get(
+ *     path="/barang/sort/nama",
+ *     tags={"Barang"},
+ *     operationId="sortBarangByNama",
+ *     summary="Sort barang by nama",
+ *     description="Sort barang from A to Z or Z to A",
+ *     @OA\Parameter(
+ *         name="order",
+ *         in="query",
+ *         description="Sort order: asc (A-Z) or desc (Z-A)",
+ *         required=false,
+ *         @OA\Schema(type="string", example="asc")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="List sorted by nama",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Barang sorted by nama",
+ *                 "data": {
+ *                     {"id": 1, "nama": "Keyboard"},
+ *                     {"id": 2, "nama": "Mouse"}
+ *                 }
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function sortByNama(Request $request)
+{
+    $order = $request->query('order', 'asc'); // default: asc (A-Z)
+
+    $barang = Barang::orderBy('nama', $order)->get();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Barang sorted by nama',
+        'data' => $barang
+    ]);
+}
+/**
+ * @OA\Get(
+ *     path="/barang/sort/jumlah",
+ *     tags={"Barang"},
+ *     operationId="sortBarangByJumlah",
+ *     summary="Sort barang by jumlah stok",
+ *     description="Sort barang berdasarkan jumlah stok dari sedikit ke banyak atau sebaliknya",
+ *     @OA\Parameter(
+ *         name="order",
+ *         in="query",
+ *         description="Sort order: asc (sedikit ke banyak) atau desc (banyak ke sedikit)",
+ *         required=false,
+ *         @OA\Schema(type="string", example="asc")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Barang sorted by jumlah",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Barang sorted by jumlah",
+ *                 "data": {
+ *                     {"id": 1, "nama": "Mouse", "jumlah": 5},
+ *                     {"id": 2, "nama": "Keyboard", "jumlah": 20}
+ *                 }
+ *             }
+ *         )
+ *     )
+ * )
+ */
+public function sortByJumlah(Request $request)
+{
+    $order = $request->query('order', 'asc'); // default: asc (sedikit ke banyak)
+
+    $barang = Barang::orderBy('jumlah', $order)->get();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Barang sorted by jumlah',
+        'data' => $barang
+    ]);
+}
+
+
 
 
     /**
