@@ -11,13 +11,11 @@ use OpenAPI\Attributes as OA;
 
 /**
  * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
  *     type="http",
- *     description="Gunakan token Bearer dari login",
- *     name="Authorization",
- *     in="header",
  *     scheme="bearer",
  *     bearerFormat="JWT",
- *     securityScheme="bearerAuth"
+ *     description="Gunakan token Bearer dari login"
  * )
  */
 

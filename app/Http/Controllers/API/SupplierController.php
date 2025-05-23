@@ -162,6 +162,7 @@ class SupplierController extends Controller
      *     tags={"Supplier"},
      *     operationId="createSupplier",
      *     summary="Create a new supplier",
+     *     security={{"bearerAuth":{}}},
      *     description="Add a new supplier",
      *     @OA\RequestBody(
      *         required=true,
@@ -208,6 +209,7 @@ class SupplierController extends Controller
      *     tags={"Supplier"},
      *     operationId="updateSupplier",
      *     summary="Update a supplier",
+     *     security={{"bearerAuth":{}}},
      *     description="Update an existing supplier",
      *     @OA\Parameter(
      *         name="id",
@@ -269,6 +271,7 @@ class SupplierController extends Controller
      *     tags={"Supplier"},
      *     operationId="deleteSupplier",
      *     summary="Delete a supplier",
+     *     security={{"bearerAuth":{}}},
      *     description="Delete a supplier by ID",
      *     @OA\Parameter(
      *         name="id",

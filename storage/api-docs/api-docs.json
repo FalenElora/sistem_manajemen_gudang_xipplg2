@@ -17,9 +17,83 @@
         {
             "url": "http://example.com",
             "description": "Production server"
+        },
+        {
+            "url": ""
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user dan mendapatkan token JWT",
+                "operationId": "d618a255475240ba3d40cc39692cd924",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Berhasil login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "jwt.token.here"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        },
+                                        "user_role": {
+                                            "type": "string",
+                                            "example": "admin"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden (role tidak sesuai)"
+                    }
+                }
+            }
+        },
         "/barang": {
             "get": {
                 "tags": [
@@ -113,7 +187,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/barang/{id}": {
@@ -235,7 +314,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -268,7 +352,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/barang/kategori/{kategori_id}": {
@@ -668,7 +757,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/category/{id}": {
@@ -775,7 +869,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -808,7 +907,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/category/search": {
@@ -949,7 +1053,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/pelanggan/{id}": {
@@ -1062,7 +1171,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1094,7 +1208,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/pelanggan/search": {
@@ -1238,7 +1357,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/supplier/{id}": {
@@ -1355,7 +1479,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1389,7 +1518,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/supplier/search/{nama_supplier}": {
@@ -1479,7 +1613,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1549,10 +1688,137 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/transaksi-keluar/search": {
+            "get": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Search transaksi keluar by date",
+                "description": "Search transaksi keluar records by exact date",
+                "operationId": "searchTransaksiKeluarByTanggal",
+                "parameters": [
+                    {
+                        "name": "tanggal",
+                        "in": "query",
+                        "description": "Tanggal transaksi dalam format YYYY-MM-DD",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-04-30"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Matching transaksi keluar found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar found",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "barang_id": 2,
+                                            "pelanggan_id": 1,
+                                            "tanggal": "2024-04-30",
+                                            "jumlah": 5,
+                                            "harga_jual": 100000
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No matching transaksi keluar found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "message": "No transaksi keluar found on this date"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/transaksi-keluar/{id}": {
+            "get": {
+                "tags": [
+                    "Transaksi Keluar"
+                ],
+                "summary": "Get transaksi keluar by ID",
+                "description": "Retrieve a single transaksi keluar record by its ID",
+                "operationId": "getTransaksiKeluarById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaksi Keluar found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Transaksi Keluar found",
+                                    "data": {
+                                        "id": 1,
+                                        "barang_id": 2,
+                                        "pelanggan_id": 1,
+                                        "tanggal": "2024-04-30",
+                                        "jumlah": 5,
+                                        "harga_jual": 100000
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Transaksi Keluar not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "message": "Transaksi Keluar not found"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "put": {
                 "tags": [
                     "Transaksi Keluar"
@@ -1624,7 +1890,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1657,13 +1928,18 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/transaksi-masuk": {
             "get": {
                 "tags": [
-                    "Transaksi masuk"
+                    "Transaksi Masuk"
                 ],
                 "summary": "List of Transaksi Masuk",
                 "description": "Retrieve a list of transaksi masuk",
@@ -2027,6 +2303,10 @@
     },
     "tags": [
         {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
             "name": "Barang",
             "description": "Barang"
         },
@@ -2045,10 +2325,6 @@
         {
             "name": "Transaksi Keluar",
             "description": "Transaksi Keluar"
-        },
-        {
-            "name": "Transaksi masuk",
-            "description": "Transaksi masuk"
         },
         {
             "name": "Transaksi Masuk",

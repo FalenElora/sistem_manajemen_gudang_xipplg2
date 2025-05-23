@@ -41,46 +41,7 @@ class KategoriController extends Controller
             ]
         ]);
     }
-
-    /**
-     * @OA\Post(
-     *     path="/category",
-     *     tags={"Category"},
-     *     operationId="createCategory",
-     *     summary="Create a new category",
-     *     description="Add a new book category",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"name"},
-     *             @OA\Property(property="name", type="string", example="Science")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Category created successfully",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Category created successfully",
-     *                 "data": {"id": 3, "name": "Science"}
-     *             }
-     *         )
-     *     )
-     * )
-     */
-    public function createCategory(Request $request)
-    {
-        return response()->json([
-            'success' => true,
-            'message' => 'Category created successfully',
-            'data' => [
-                'id' => 3,
-                'name' => $request->name
-            ]
-        ], 201);
-    }
-    /**
+     /**
  * @OA\Get(
  *     path="/category/{id}",
  *     tags={"Category"},
@@ -208,11 +169,53 @@ public function searchByName(Request $request)
 
 
     /**
+     * @OA\Post(
+     *     path="/category",
+     *     tags={"Category"},
+     *     operationId="createCategory",
+     *     summary="Create a new category",
+     *     security={{"bearerAuth":{}}},
+     *     description="Add a new book category",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name"},
+     *             @OA\Property(property="name", type="string", example="Science")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Category created successfully",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Category created successfully",
+     *                 "data": {"id": 3, "name": "Science"}
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function createCategory(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Category created successfully',
+            'data' => [
+                'id' => 3,
+                'name' => $request->name
+            ]
+        ], 201);
+    }
+   
+
+    /**
      * @OA\Put(
      *     path="/category/{id}",
      *     tags={"Category"},
      *     operationId="updateCategory",
      *     summary="Update a category",
+     *     security={{"bearerAuth":{}}},
      *     description="Update a book category by ID",
      *     @OA\Parameter(
      *         name="id",
@@ -258,6 +261,7 @@ public function searchByName(Request $request)
      *     tags={"Category"},
      *     operationId="deleteCategory",
      *     summary="Delete a category",
+     *     security={{"bearerAuth":{}}},
      *     description="Delete a book category by ID",
      *     @OA\Parameter(
      *         name="id",

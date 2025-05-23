@@ -157,6 +157,7 @@ public function show($id)
 
 
 
+
     /**
      * @OA\Post(
      *     path="/transaksi-masuk",
@@ -276,12 +277,21 @@ public function show($id)
      */
     public function destroy($id)
     {
-        $transaksi = Transaksi_masuk::findOrFail($id);
-        $transaksi->delete();
+         $transaksi = Transaksi_masuk::find($id);
 
+    if (!$transaksi) {
         return response()->json([
-            'success' => true,
-            'message' => 'Transaksi Masuk deleted successfully'
-        ]);
+            'success' => false,
+            'message' => 'Transaksi Masuk not found'
+        ], 404);
     }
+
+    $transaksi->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Transaksi Masuk deleted successfully'
+    ]);
+    
+}
 }
