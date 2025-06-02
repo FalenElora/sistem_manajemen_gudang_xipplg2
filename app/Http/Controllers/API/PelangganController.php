@@ -154,6 +154,7 @@ class PelangganController extends Controller
      *     path="/pelanggan",
      *     tags={"Pelanggan"},
      *     summary="Create a new pelanggan",
+     *     security={{"bearerAuth":{}}},
      *     operationId="createPelanggan",
      *     @OA\RequestBody(
      *         required=true,
@@ -192,6 +193,7 @@ class PelangganController extends Controller
      *     path="/pelanggan/{id}",
      *     tags={"Pelanggan"},
      *     summary="Update existing pelanggan",
+     *     security={{"bearerAuth":{}}},
      *     operationId="updatePelanggan",
      *     @OA\Parameter(
      *         name="id",
@@ -236,6 +238,7 @@ class PelangganController extends Controller
      *     path="/pelanggan/{id}",
      *     tags={"Pelanggan"},
      *     summary="Delete a pelanggan",
+     *     security={{"bearerAuth":{}}},
      *     operationId="deletePelanggan",
      *     @OA\Parameter(
      *         name="id",

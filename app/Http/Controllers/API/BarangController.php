@@ -400,6 +400,7 @@ public function sortByJumlah(Request $request)
      *     tags={"Barang"},
      *     operationId="createBarang",
      *     summary="Create a new barang",
+     *     security={{"bearerAuth":{}}},
      *     description="Add a new barang to inventory",
      *     @OA\RequestBody(
      *         required=true,
@@ -441,6 +442,7 @@ public function sortByJumlah(Request $request)
      *     tags={"Barang"},
      *     operationId="updateBarang",
      *     summary="Update a barang",
+     *     security={{"bearerAuth":{}}},
      *     description="Update an existing barang",
      *     @OA\Parameter(
      *         name="id",
@@ -488,6 +490,7 @@ public function sortByJumlah(Request $request)
      *     tags={"Barang"},
      *     operationId="deleteBarang",
      *     summary="Delete a barang",
+     *     security={{"bearerAuth":{}}},
      *     description="Delete an existing barang by ID",
      *     @OA\Parameter(
      *         name="id",
