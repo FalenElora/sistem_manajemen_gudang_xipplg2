@@ -40,6 +40,114 @@ class PelangganController extends Controller
             'data' => $data
         ]);
     }
+    /**
+     * @OA\Get(
+     *     path="/pelanggan/{id}",
+     *     tags={"Pelanggan"},
+     *     summary="Get pelanggan by ID",
+     *     operationId="getPelangganById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Pelanggan retrieved successfully",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Pelanggan retrieved successfully",
+     *                 "data": {"id": 1, "nama": "Budi", "kontak": "08123456789", "alamat": "Jl. Merdeka 10"}
+     *             }
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Pelanggan not found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "message": "Pelanggan not found"
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function show($id)
+    {
+        $data = pelanggan::find($id);
+
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pelanggan not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pelanggan retrieved successfully',
+            'data' => $data
+        ]);
+    }
+        /**
+     * @OA\Get(
+     *     path="/pelanggan/search",
+     *     tags={"Pelanggan"},
+     *     summary="Search pelanggan by name",
+     *     operationId="searchPelangganByName",
+     *     @OA\Parameter(
+     *         name="nama",
+     *         in="query",
+     *         required=true,
+     *         description="Nama pelanggan yang ingin dicari",
+     *         @OA\Schema(type="string", example="Budi")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Pelanggan found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "message": "Search result",
+     *                 "data": {
+     *                     {"id": 1, "nama": "Budi", "kontak": "08123456789", "alamat": "Jl. Merdeka 10"}
+     *                 }
+     *             }
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No pelanggan found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "message": "No pelanggan found"
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function searchByName(Request $request)
+    {
+        $nama = $request->query('nama');
+        $data = pelanggan::where('nama', 'LIKE', "%$nama%")->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No pelanggan found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Search result',
+            'data' => $data
+        ]);
+    }
 
     /**
      * @OA\Post(

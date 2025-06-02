@@ -40,6 +40,121 @@ class SupplierController extends Controller
             'data' => $supplier
         ], 200);
     }
+        /**
+     * @OA\Get(
+     *     path="/supplier/{id}",
+     *     tags={"Supplier"},
+     *     operationId="getSupplierById",
+     *     summary="Get supplier by ID",
+     *     description="Retrieve a single supplier by its ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Supplier found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "status": 200,
+     *                 "message": "Supplier retrieved successfully.",
+     *                 "data": {"id": 1, "nama_supplier": "PT Maju", "kontak_selanggan": "0823456", "alamat": "Jl. Merdeka"}
+     *             }
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Supplier not found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "status": 404,
+     *                 "message": "Supplier not found.",
+     *                 "data": null
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function show($id)
+    {
+        $supplier = Supplier::find($id);
+
+        if (!$supplier) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Supplier not found.',
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Supplier retrieved successfully.',
+            'data' => $supplier
+        ], 200);
+    }
+    
+        /**
+     * @OA\Get(
+     *     path="/supplier/search/{nama_supplier}",
+     *     tags={"Supplier"},
+     *     operationId="searchSupplierByName",
+     *     summary="Search supplier by name",
+     *     description="Search supplier(s) whose name matches or contains the given string",
+     *     @OA\Parameter(
+     *         name="nama_supplier",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string", example="Maju")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Supplier(s) found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "status": 200,
+     *                 "message": "Supplier(s) found.",
+     *                 "data": {
+     *                     {"id": 1, "nama_supplier": "PT Maju", "kontak_selanggan": "0823456", "alamat": "Jl. Merdeka"}
+     *                 }
+     *             }
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No supplier found",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "status": 404,
+     *                 "message": "No supplier found.",
+     *                 "data": null
+     *             }
+     *         )
+     *     )
+     * )
+     */
+    public function searchByName($nama_supplier)
+    {
+        $supplier = Supplier::where('nama_supplier', 'LIKE', "%$nama_supplier%")->get();
+
+        if ($supplier->isEmpty()) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'No supplier found.',
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Supplier(s) found.',
+            'data' => $supplier
+        ], 200);
+    }
+
+
 
     /**
      * @OA\Post(
