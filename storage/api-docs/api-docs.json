@@ -774,7 +774,7 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "Science"
+                                        "example": "Makanan"
                                     }
                                 },
                                 "type": "object"
@@ -793,7 +793,7 @@
                                     "message": "Category created successfully",
                                     "data": {
                                         "id": 3,
-                                        "name": "Science"
+                                        "name": "Makanan"
                                     }
                                 }
                             }

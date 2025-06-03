@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Transaksi_keluar;
+use App\Models\TransaksiKeluar;
 use Illuminate\Http\Request;
 
 class Transaksi_keluarController extends Controller
@@ -17,30 +16,19 @@ class Transaksi_keluarController extends Controller
      *     summary="List of Transaksi Keluar",
 
      *     description="Retrieve a list of transaksi keluar",
+>>>>>>> 9839338e3413a56a9f5083fc202defe664bab8c4
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Successfully retrieved transaksi keluar",
-     *                 "data": {
-     *                     {"id": 1, "barang_id": 2, "pelanggan_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
-     *                 }
-     *             }
-     *         )
+     *         description="Daftar transaksi keluar"
      *     )
      * )
      */
     public function index()
     {
-        $transaksi = Transaksi_keluar::all();
-        return response()->json([
-            'success' => true,
-            'message' => 'Successfully retrieved transaksi keluar',
-            'data' => $transaksi
-        ]);
+        return TransaksiKeluar::all();
     }
+<<<<<<< HEAD
+=======
     /**
  * @OA\Get(
  *     path="/transaksi-keluar/search",
@@ -157,132 +145,152 @@ public function show($id)
 }
     
     
+>>>>>>> 9839338e3413a56a9f5083fc202defe664bab8c4
 
     /**
      * @OA\Post(
      *     path="/transaksi-keluar",
      *     tags={"Transaksi Keluar"},
+<<<<<<< HEAD
+     *     summary="Buat transaksi keluar baru",
+=======
      *     operationId="createTransaksiKeluar",
      *     summary="Create a new transaksi keluar",
      *     security={{"bearerAuth":{}}},
      *     description="Add a new transaksi keluar record",
+>>>>>>> 9839338e3413a56a9f5083fc202defe664bab8c4
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"barang_id","pelanggan_id","tanggal","jumlah","harga_jual"},
-     *             @OA\Property(property="barang_id", type="integer", example=2),
-     *             @OA\Property(property="pelanggan_id", type="integer", example=1),
-     *             @OA\Property(property="tanggal", type="string", format="date", example="2024-04-30"),
-     *             @OA\Property(property="jumlah", type="integer", example=5),
-     *             @OA\Property(property="harga_jual", type="number", example=100000)
+     *             required={"nama", "jumlah", "tanggal"},
+     *             @OA\Property(property="nama", type="string"),
+     *             @OA\Property(property="jumlah", type="integer"),
+     *             @OA\Property(property="tanggal", type="string", format="date")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Transaksi Keluar created successfully",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Transaksi Keluar created successfully",
-     *                 "data": {"id": 1, "barang_id": 2, "pelanggan_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
-     *             }
-     *         )
-     *     )
+     *     @OA\Response(response=201, description="Transaksi keluar berhasil dibuat")
      * )
      */
     public function store(Request $request)
     {
-        $transaksi = Transaksi_keluar::create($request->all());
+        $validated = $request->validate([
+            'nama' => 'required|string',
+            'jumlah' => 'required|integer',
+            'tanggal' => 'required|date',
+        ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Transaksi Keluar created successfully',
-            'data' => $transaksi
-        ], 201);
+        return TransaksiKeluar::create($validated);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/transaksi-keluar/{id}",
+     *     tags={"Transaksi Keluar"},
+     *     summary="Ambil transaksi keluar berdasarkan ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Detail transaksi keluar")
+     * )
+     */
+    public function show($id)
+    {
+        return TransaksiKeluar::findOrFail($id);
     }
 
     /**
      * @OA\Put(
      *     path="/transaksi-keluar/{id}",
      *     tags={"Transaksi Keluar"},
+<<<<<<< HEAD
+     *     summary="Update transaksi keluar",
+=======
      *     operationId="updateTransaksiKeluar",
      *     summary="Update a transaksi keluar",
      *     security={{"bearerAuth":{}}},
      *     description="Update an existing transaksi keluar",
+>>>>>>> 9839338e3413a56a9f5083fc202defe664bab8c4
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         @OA\Schema(type="integer", example=1)
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
+     *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="barang_id", type="integer", example=3),
-     *             @OA\Property(property="pelanggan_id", type="integer", example=2),
-     *             @OA\Property(property="tanggal", type="string", format="date", example="2024-05-01"),
-     *             @OA\Property(property="jumlah", type="integer", example=10),
-     *             @OA\Property(property="harga_jual", type="number", example=120000)
+     *             @OA\Property(property="nama", type="string"),
+     *             @OA\Property(property="jumlah", type="integer"),
+     *             @OA\Property(property="tanggal", type="string", format="date")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Transaksi Keluar updated successfully",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Transaksi Keluar updated successfully",
-     *                 "data": {"id": 1, "barang_id": 3, "pelanggan_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
-     *             }
-     *         )
-     *     )
+     *     @OA\Response(response=200, description="Transaksi keluar berhasil diupdate")
      * )
      */
     public function update(Request $request, $id)
     {
-        $transaksi = Transaksi_keluar::findOrFail($id);
+        $transaksi = TransaksiKeluar::findOrFail($id);
         $transaksi->update($request->all());
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Transaksi Keluar updated successfully',
-            'data' => $transaksi
-        ]);
+        return $transaksi;
     }
 
     /**
      * @OA\Delete(
      *     path="/transaksi-keluar/{id}",
      *     tags={"Transaksi Keluar"},
+<<<<<<< HEAD
+     *     summary="Hapus transaksi keluar",
+=======
      *     operationId="deleteTransaksiKeluar",
      *     summary="Delete a transaksi keluar",
      *     security={{"bearerAuth":{}}},
      *     description="Delete a transaksi keluar record by ID",
+>>>>>>> 9839338e3413a56a9f5083fc202defe664bab8c4
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         @OA\Schema(type="integer", example=1)
+     *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Transaksi Keluar deleted successfully",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Transaksi Keluar deleted successfully"
-     *             }
-     *         )
-     *     )
+     *     @OA\Response(response=204, description="Transaksi keluar berhasil dihapus")
      * )
      */
     public function destroy($id)
     {
-        $transaksi = Transaksi_keluar::findOrFail($id);
+        $transaksi = TransaksiKeluar::findOrFail($id);
         $transaksi->delete();
+        return response()->json(null, 204);
+    }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Transaksi Keluar deleted successfully'
-        ]);
+    /**
+     * @OA\Get(
+     *     path="/transaksi-keluar/search",
+     *     tags={"Transaksi Keluar"},
+     *     summary="Cari transaksi keluar berdasarkan ID atau Nama",
+     *     @OA\Parameter(
+     *         name="keyword",
+     *         in="query",
+     *         description="ID atau Nama transaksi",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Hasil pencarian transaksi keluar"
+     *     )
+     * )
+     */
+    public function search(Request $request)
+    {
+        $keyword = $request->query('keyword');
+
+        $result = TransaksiKeluar::where('id', $keyword)
+            ->orWhere('nama', 'like', '%' . $keyword . '%')
+            ->get();
+
+        return response()->json($result);
     }
 }
