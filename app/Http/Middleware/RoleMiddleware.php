@@ -5,11 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RoleCheck
+class RoleMiddleware
 {
-   public function handle(Request $request, Closure $next, ...$roles)
-    {
-        
-    }
+   
 }

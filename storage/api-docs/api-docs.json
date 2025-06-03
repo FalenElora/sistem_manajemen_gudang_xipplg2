@@ -99,27 +99,87 @@
                 "tags": [
                     "Barang"
                 ],
-                "summary": "List of Barang",
-                "description": "Retrieve a list of barang",
-                "operationId": "listBarang",
+                "summary": "List or search Barang by name",
+                "description": "Retrieve all barang or filter barang by partial match on 'nama' using query string",
+                "operationId": "listOrSearchBarang",
+                "parameters": [
+                    {
+                        "name": "nama",
+                        "in": "query",
+                        "description": "Optional. Partial or full name of the barang to search for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "mouse"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "List of barang or search result",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Successfully retrieved barang",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Mouse",
-                                            "kategori_id": 2,
-                                            "harga": 50000,
-                                            "jumlah": 10
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully retrieved barang"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama": {
+                                                        "type": "string",
+                                                        "example": "Mouse Logitech"
+                                                    },
+                                                    "kategori_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "harga": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 50000
+                                                    },
+                                                    "jumlah": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No matching barang found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No matching barang found"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -423,70 +483,6 @@
                 }
             }
         },
-        "/barang/search": {
-            "get": {
-                "tags": [
-                    "Barang"
-                ],
-                "summary": "Search barang by name",
-                "description": "Retrieve a list of barang based on a partial match of the name",
-                "operationId": "searchBarangByName",
-                "parameters": [
-                    {
-                        "name": "nama",
-                        "in": "query",
-                        "description": "Nama barang yang ingin dicari",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "mouse"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Barang search result",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Search results",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Mouse Logitech",
-                                            "kategori_id": 2,
-                                            "harga": 50000,
-                                            "jumlah": 10
-                                        },
-                                        {
-                                            "id": 2,
-                                            "nama": "Mousepad",
-                                            "kategori_id": 3,
-                                            "harga": 15000,
-                                            "jumlah": 5
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No matching barang found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No matching barang found"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/barang/stok/kurang-dari-100": {
             "get": {
                 "tags": [
@@ -686,28 +682,74 @@
                 "tags": [
                     "Category"
                 ],
-                "summary": "List of Categories",
-                "description": "Retrieve a list of book categories",
-                "operationId": "listCategory",
+                "summary": "List or search Category by name",
+                "description": "Retrieve all categories or filter by partial match on 'nama' using query string",
+                "operationId": "listOrSearchCategory",
+                "parameters": [
+                    {
+                        "name": "nama",
+                        "in": "query",
+                        "description": "Optional. Partial or full name of the category to search for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Fiction"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "List of categories or search result",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Successfully retrieved categories",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "name": "Fiction"
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
                                         },
-                                        {
-                                            "id": 2,
-                                            "name": "Non-Fiction"
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully retrieved categories"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama": {
+                                                        "type": "string",
+                                                        "example": "Fiction"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No matching categories found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No matching categories found"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -915,84 +957,87 @@
                 ]
             }
         },
-        "/category/search": {
-            "get": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Search categories by name",
-                "description": "Retrieve categories that match a given name",
-                "operationId": "searchCategoryByName",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Category name or partial match",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Fiction"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Search results",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Categories found",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "name": "Fiction"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No categories found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No categories found"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/pelanggan": {
             "get": {
                 "tags": [
                     "Pelanggan"
                 ],
-                "summary": "List all pelanggan",
-                "operationId": "listPelanggan",
+                "summary": "List or search pelanggan by name",
+                "description": "Retrieve all pelanggan or filter pelanggan by partial match on 'nama' using query string",
+                "operationId": "listOrSearchPelanggan",
+                "parameters": [
+                    {
+                        "name": "nama",
+                        "in": "query",
+                        "description": "Optional. Partial or full name of the pelanggan to search for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Budi"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "List of pelanggan or search result",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Pelanggan retrieved successfully",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Budi",
-                                            "kontak": "08123456789",
-                                            "alamat": "Jl. Merdeka 10"
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pelanggan retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama": {
+                                                        "type": "string",
+                                                        "example": "Budi"
+                                                    },
+                                                    "kontak": {
+                                                        "type": "string",
+                                                        "example": "08123456789"
+                                                    },
+                                                    "alamat": {
+                                                        "type": "string",
+                                                        "example": "Jl. Merdeka 10"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No matching pelanggan found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No matching pelanggan found"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1216,86 +1261,87 @@
                 ]
             }
         },
-        "/pelanggan/search": {
-            "get": {
-                "tags": [
-                    "Pelanggan"
-                ],
-                "summary": "Search pelanggan by name",
-                "operationId": "searchPelangganByName",
-                "parameters": [
-                    {
-                        "name": "nama",
-                        "in": "query",
-                        "description": "Nama pelanggan yang ingin dicari",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Budi"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Pelanggan found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Search result",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama": "Budi",
-                                            "kontak": "08123456789",
-                                            "alamat": "Jl. Merdeka 10"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No pelanggan found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "message": "No pelanggan found"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/supplier": {
             "get": {
                 "tags": [
                     "Supplier"
                 ],
-                "summary": "List of Suppliers",
-                "description": "Retrieve all supplier data",
-                "operationId": "listSupplier",
+                "summary": "List or search suppliers by name",
+                "description": "Retrieve all suppliers or filter by partial match on 'nama' using query string",
+                "operationId": "listOrSearchSupplier",
+                "parameters": [
+                    {
+                        "name": "nama",
+                        "in": "query",
+                        "description": "Optional. Partial or full name of the supplier to search for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "PT Maju"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "List of suppliers or search result",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": 200,
-                                    "message": "Supplier retrieved successfully.",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama_supplier": "PT Maju",
-                                            "kontak_selanggan": "0823456",
-                                            "alamat": "Jl. Merdeka"
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Supplier retrieved successfully."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nama": {
+                                                        "type": "string",
+                                                        "example": "PT Maju"
+                                                    },
+                                                    "kontak": {
+                                                        "type": "string",
+                                                        "example": "0823456"
+                                                    },
+                                                    "alamat": {
+                                                        "type": "string",
+                                                        "example": "Jl. Merdeka"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No matching supplier found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No matching supplier found"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1315,16 +1361,16 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "nama_supplier",
-                                    "kontak_selanggan",
+                                    "nama",
+                                    "kontak",
                                     "alamat"
                                 ],
                                 "properties": {
-                                    "nama_supplier": {
+                                    "nama": {
                                         "type": "string",
                                         "example": "PT Sejahtera"
                                     },
-                                    "kontak_selanggan": {
+                                    "kontak": {
                                         "type": "string",
                                         "example": "08123456789"
                                     },
@@ -1349,8 +1395,8 @@
                                     "message": "Supplier created successfully.",
                                     "data": {
                                         "id": 3,
-                                        "nama_supplier": "PT Sejahtera",
-                                        "kontak_selanggan": "08123456789",
+                                        "nama": "PT Sejahtera",
+                                        "kontak": "08123456789",
                                         "alamat": "Jl. Kebangsaan No.10"
                                     }
                                 }
@@ -1395,8 +1441,8 @@
                                     "message": "Supplier retrieved successfully.",
                                     "data": {
                                         "id": 1,
-                                        "nama_supplier": "PT Maju",
-                                        "kontak_selanggan": "0823456",
+                                        "nama": "PT Maju",
+                                        "kontak": "0823456",
                                         "alamat": "Jl. Merdeka"
                                     }
                                 }
@@ -1442,11 +1488,11 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "nama_supplier": {
+                                    "nama": {
                                         "type": "string",
                                         "example": "CV Makmur Jaya"
                                     },
-                                    "kontak_selanggan": {
+                                    "kontak": {
                                         "type": "string",
                                         "example": "08987654321"
                                     },
@@ -1471,8 +1517,8 @@
                                     "message": "Supplier updated successfully.",
                                     "data": {
                                         "id": 1,
-                                        "nama_supplier": "CV Makmur Jaya",
-                                        "kontak_selanggan": "08987654321",
+                                        "nama": "CV Makmur Jaya",
+                                        "kontak": "08987654321",
                                         "alamat": "Jl. Industri No.5"
                                     }
                                 }
@@ -1524,62 +1570,6 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/supplier/search/{nama_supplier}": {
-            "get": {
-                "tags": [
-                    "Supplier"
-                ],
-                "summary": "Search supplier by name",
-                "description": "Search supplier(s) whose name matches or contains the given string",
-                "operationId": "searchSupplierByName",
-                "parameters": [
-                    {
-                        "name": "nama_supplier",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Maju"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Supplier(s) found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": 200,
-                                    "message": "Supplier(s) found.",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "nama_supplier": "PT Maju",
-                                            "kontak_selanggan": "0823456",
-                                            "alamat": "Jl. Merdeka"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No supplier found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": 404,
-                                    "message": "No supplier found.",
-                                    "data": null
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/transaksi-keluar": {
@@ -1960,7 +1950,7 @@
                                             "supplier_id": 1,
                                             "tanggal": "2024-04-30",
                                             "jumlah": 5,
-                                            "harga_jual": 100000
+                                            "harga_beli": 100000
                                         }
                                     ]
                                 }
@@ -1991,7 +1981,7 @@
                                     "supplier_id",
                                     "tanggal",
                                     "jumlah",
-                                    "harga_jual"
+                                    "harga_beli"
                                 ],
                                 "properties": {
                                     "barang_id": {
@@ -2011,7 +2001,7 @@
                                         "type": "integer",
                                         "example": 5
                                     },
-                                    "harga_jual": {
+                                    "harga_beli": {
                                         "type": "number",
                                         "example": 100000
                                     }
@@ -2036,7 +2026,7 @@
                                         "supplier_id": 1,
                                         "tanggal": "2024-04-30",
                                         "jumlah": 5,
-                                        "harga_jual": 100000
+                                        "harga_beli": 100000
                                     }
                                 }
                             }
@@ -2087,7 +2077,7 @@
                                             "supplier_id": 1,
                                             "tanggal": "2024-04-30",
                                             "jumlah": 5,
-                                            "harga_jual": 100000
+                                            "harga_beli": 100000
                                         }
                                     ]
                                 }
@@ -2148,7 +2138,7 @@
                                         "supplier_id": 1,
                                         "tanggal": "2024-04-30",
                                         "jumlah": 5,
-                                        "harga_jual": 100000
+                                        "harga_beli": 100000
                                     }
                                 }
                             }
@@ -2213,7 +2203,7 @@
                                         "type": "integer",
                                         "example": 10
                                     },
-                                    "harga_jual": {
+                                    "harga_beli": {
                                         "type": "number",
                                         "example": 120000
                                     }
@@ -2238,7 +2228,7 @@
                                         "supplier_id": 2,
                                         "tanggal": "2024-05-01",
                                         "jumlah": 10,
-                                        "harga_jual": 120000
+                                        "harga_beli": 120000
                                     }
                                 }
                             }

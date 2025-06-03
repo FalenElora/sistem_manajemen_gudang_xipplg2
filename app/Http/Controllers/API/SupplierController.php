@@ -9,37 +9,80 @@ use Illuminate\Http\Request;
 class SupplierController extends Controller
 {
     /**
-     * @OA\Get(
-     *     path="/supplier",
-     *     tags={"Supplier"},
-     *     operationId="listSupplier",
-     *     summary="List of Suppliers",
-     *     description="Retrieve all supplier data",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "status": 200,
-     *                 "message": "Supplier retrieved successfully.",
-     *                 "data": {
-     *                     {"id": 1, "nama_supplier": "PT Maju", "kontak_selanggan": "0823456", "alamat": "Jl. Merdeka"}
-     *                 }
-     *             }
-     *         )
-     *     )
-     * )
-     */
-    public function index()
-    {
-        $supplier = Supplier::all();
+ * @OA\Get(
+ *     path="/supplier",
+ *     tags={"Supplier"},
+ *     operationId="listOrSearchSupplier",
+ *     summary="List or search suppliers by name",
+ *     description="Retrieve all suppliers or filter by partial match on 'nama' using query string",
+ *     @OA\Parameter(
+ *         name="nama",
+ *         in="query",
+ *         required=false,
+ *         description="Optional. Partial or full name of the supplier to search for",
+ *         @OA\Schema(
+ *             type="string",
+ *             example="PT Maju"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="List of suppliers or search result",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=200),
+ *             @OA\Property(property="message", type="string", example="Supplier retrieved successfully."),
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="array",
+ *                 @OA\Items(
+ *                     @OA\Property(property="id", type="integer", example=1),
+ *                     @OA\Property(property="nama", type="string", example="PT Maju"),
+ *                     @OA\Property(property="kontak", type="string", example="0823456"),
+ *                     @OA\Property(property="alamat", type="string", example="Jl. Merdeka")
+ *                 )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No matching supplier found",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=404),
+ *             @OA\Property(property="message", type="string", example="No matching supplier found")
+ *         )
+ *     )
+ * )
+ */
+public function index(Request $request)
+{
+    $nama = $request->query('nama');
+
+    if ($nama) {
+        $supplier = Supplier::where('nama', 'LIKE', '%' . $nama . '%')->get();
+
+        if ($supplier->isEmpty()) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'No matching supplier found',
+            ], 404);
+        }
 
         return response()->json([
             'status' => 200,
-            'message' => 'Supplier retrieved successfully.',
+            'message' => 'Search results',
             'data' => $supplier
         ], 200);
     }
+
+    $supplier = Supplier::all();
+
+    return response()->json([
+        'status' => 200,
+        'message' => 'Supplier retrieved successfully.',
+        'data' => $supplier
+    ], 200);
+}
+
         /**
      * @OA\Get(
      *     path="/supplier/{id}",
@@ -60,7 +103,7 @@ class SupplierController extends Controller
      *             example={
      *                 "status": 200,
      *                 "message": "Supplier retrieved successfully.",
-     *                 "data": {"id": 1, "nama_supplier": "PT Maju", "kontak_selanggan": "0823456", "alamat": "Jl. Merdeka"}
+     *                 "data": {"id": 1, "nama": "PT Maju", "kontak": "0823456", "alamat": "Jl. Merdeka"}
      *             }
      *         )
      *     ),
@@ -96,64 +139,7 @@ class SupplierController extends Controller
         ], 200);
     }
     
-        /**
-     * @OA\Get(
-     *     path="/supplier/search/{nama_supplier}",
-     *     tags={"Supplier"},
-     *     operationId="searchSupplierByName",
-     *     summary="Search supplier by name",
-     *     description="Search supplier(s) whose name matches or contains the given string",
-     *     @OA\Parameter(
-     *         name="nama_supplier",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="string", example="Maju")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Supplier(s) found",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "status": 200,
-     *                 "message": "Supplier(s) found.",
-     *                 "data": {
-     *                     {"id": 1, "nama_supplier": "PT Maju", "kontak_selanggan": "0823456", "alamat": "Jl. Merdeka"}
-     *                 }
-     *             }
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="No supplier found",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "status": 404,
-     *                 "message": "No supplier found.",
-     *                 "data": null
-     *             }
-     *         )
-     *     )
-     * )
-     */
-    public function searchByName($nama_supplier)
-    {
-        $supplier = Supplier::where('nama_supplier', 'LIKE', "%$nama_supplier%")->get();
-
-        if ($supplier->isEmpty()) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No supplier found.',
-                'data' => null
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Supplier(s) found.',
-            'data' => $supplier
-        ], 200);
-    }
-
+        
 
 
     /**
@@ -167,9 +153,9 @@ class SupplierController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"nama_supplier", "kontak_selanggan", "alamat"},
-     *             @OA\Property(property="nama_supplier", type="string", example="PT Sejahtera"),
-     *             @OA\Property(property="kontak_selanggan", type="string", example="08123456789"),
+     *             required={"nama", "kontak", "alamat"},
+     *             @OA\Property(property="nama", type="string", example="PT Sejahtera"),
+     *             @OA\Property(property="kontak", type="string", example="08123456789"),
      *             @OA\Property(property="alamat", type="string", example="Jl. Kebangsaan No.10")
      *         )
      *     ),
@@ -180,7 +166,7 @@ class SupplierController extends Controller
      *             example={
      *                 "status": 201,
      *                 "message": "Supplier created successfully.",
-     *                 "data": {"id": 3, "nama_supplier": "PT Sejahtera", "kontak_selanggan": "08123456789", "alamat": "Jl. Kebangsaan No.10"}
+     *                 "data": {"id": 3, "nama": "PT Sejahtera", "kontak": "08123456789", "alamat": "Jl. Kebangsaan No.10"}
      *             }
      *         )
      *     )
@@ -189,8 +175,8 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_supplier' => 'required|string|max:255',
-            'kontak_selanggan' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
+            'kontak' => 'required|string|max:255',
             'alamat' => 'required|string|max:255'
         ]);
 
@@ -220,8 +206,8 @@ class SupplierController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="nama_supplier", type="string", example="CV Makmur Jaya"),
-     *             @OA\Property(property="kontak_selanggan", type="string", example="08987654321"),
+     *             @OA\Property(property="nama", type="string", example="CV Makmur Jaya"),
+     *             @OA\Property(property="kontak", type="string", example="08987654321"),
      *             @OA\Property(property="alamat", type="string", example="Jl. Industri No.5")
      *         )
      *     ),
@@ -232,7 +218,7 @@ class SupplierController extends Controller
      *             example={
      *                 "status": 200,
      *                 "message": "Supplier updated successfully.",
-     *                 "data": {"id": 1, "nama_supplier": "CV Makmur Jaya", "kontak_selanggan": "08987654321", "alamat": "Jl. Industri No.5"}
+     *                 "data": {"id": 1, "nama": "CV Makmur Jaya", "kontak": "08987654321", "alamat": "Jl. Industri No.5"}
      *             }
      *         )
      *     )
@@ -251,8 +237,8 @@ class SupplierController extends Controller
         }
 
         $request->validate([
-            'nama_supplier' => 'required|string|max:255',
-            'kontak_selanggan' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
+            'kontak' => 'required|string|max:255',
             'alamat' => 'required|string|max:255'
         ]);
 

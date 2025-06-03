@@ -1,46 +1,84 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use App\Models\Kategori;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
     /**
-     * @OA\Get(
-     *     path="/category",
-     *     tags={"Category"},
-     *     operationId="listCategory",
-     *     summary="List of Categories",
-     *     description="Retrieve a list of book categories",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Successfully retrieved categories",
-     *                 "data": {
-     *                     {"id": 1, "name": "Fiction"},
-     *                     {"id": 2, "name": "Non-Fiction"}
-     *                 }
-     *             }
-     *         )
-     *     )
-     * )
-     */
-    public function listCategory()
-    {
+ * @OA\Get(
+ *     path="/category",
+ *     tags={"Category"},
+ *     operationId="listOrSearchCategory",
+ *     summary="List or search Category by name",
+ *     description="Retrieve all categories or filter by partial match on 'nama' using query string",
+ *     @OA\Parameter(
+ *         name="nama",
+ *         in="query",
+ *         required=false,
+ *         description="Optional. Partial or full name of the category to search for",
+ *         @OA\Schema(
+ *             type="string",
+ *             example="Fiction"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="List of categories or search result",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true),
+ *             @OA\Property(property="message", type="string", example="Successfully retrieved categories"),
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="array",
+ *                 @OA\Items(
+ *                     @OA\Property(property="id", type="integer", example=1),
+ *                     @OA\Property(property="nama", type="string", example="Fiction")
+ *                 )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No matching categories found",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="No matching categories found")
+ *         )
+ *     )
+ * )
+ */
+public function listCategory(Request $request)
+{
+    $name = $request->query('nama');
+
+    if ($name) {
+        $categories = Kategori::where('nama', 'LIKE', '%' . $name . '%')->get();
+
+        if ($categories->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No matching categories found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => true,
-            'message' => 'Successfully retrieved categories',
-            'data' => [
-                [ 'id' => 1, 'name' => 'Fiction' ],
-                [ 'id' => 2, 'name' => 'Non-Fiction' ]
-            ]
+            'message' => 'Search results',
+            'data' => $categories
         ]);
     }
+
+    $categories = Kategori::all();
+    return response()->json([
+        'success' => true,
+        'message' => 'Successfully retrieved categories',
+        'data' => $categories
+    ]);
+}
+
      /**
  * @OA\Get(
  *     path="/category/{id}",
@@ -95,73 +133,6 @@ public function getCategoryById($id)
         return response()->json([
             'success' => false,
             'message' => 'Category not found'
-        ], 404);
-    }
-}
-/**
- * @OA\Get(
- *     path="/category/search",
- *     tags={"Category"},
- *     operationId="searchCategoryByName",
- *     summary="Search categories by name",
- *     description="Retrieve categories that match a given name",
- *     @OA\Parameter(
- *         name="name",
- *         in="query",
- *         required=true,
- *         description="Category name or partial match",
- *         @OA\Schema(type="string", example="Fiction")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Search results",
- *         @OA\JsonContent(
- *             example={
- *                 "success": true,
- *                 "message": "Categories found",
- *                 "data": {
- *                     {"id": 1, "name": "Fiction"}
- *                 }
- *             }
- *         )
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="No categories found",
- *         @OA\JsonContent(
- *             example={
- *                 "success": false,
- *                 "message": "No categories found"
- *             }
- *         )
- *     )
- * )
- */
-public function searchByName(Request $request)
-{
-    $name = strtolower($request->query('name'));
-
-    // Contoh data statis (bisa diganti pakai database nanti)
-    $categories = [
-        ['id' => 1, 'name' => 'Fiction'],
-        ['id' => 2, 'name' => 'Non-Fiction'],
-        ['id' => 3, 'name' => 'Science'],
-    ];
-
-    $results = array_filter($categories, function ($category) use ($name) {
-        return str_contains(strtolower($category['name']), $name);
-    });
-
-    if (count($results) > 0) {
-        return response()->json([
-            'success' => true,
-            'message' => 'Categories found',
-            'data' => array_values($results)
-        ]);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'No categories found'
         ], 404);
     }
 }

@@ -12,9 +12,10 @@ class Transaksi_keluarController extends Controller
      * @OA\Get(
      *     path="/transaksi-keluar",
      *     tags={"Transaksi Keluar"},
+     *     security={{"bearerAuth":{}}},
      *     operationId="listTransaksiKeluar",
      *     summary="List of Transaksi Keluar",
-     *     security={{"bearerAuth":{}}},
+
      *     description="Retrieve a list of transaksi keluar",
      *     @OA\Response(
      *         response=200,
@@ -47,7 +48,6 @@ class Transaksi_keluarController extends Controller
  *     operationId="searchTransaksiKeluarByTanggal",
  *     summary="Search transaksi keluar by date",
  *     security={{"bearerAuth":{}}},
- *     security={{"bearerAuth":{}}}, 
  *     description="Search transaksi keluar records by exact date",
  *     @OA\Parameter(
  *         name="tanggal",
@@ -108,7 +108,6 @@ public function searchByTanggal(Request $request)
  *     operationId="getTransaksiKeluarById",
  *     summary="Get transaksi keluar by ID",
  *     security={{"bearerAuth":{}}},
- *     security={{"bearerAuth":{}}}, 
  *     description="Retrieve a single transaksi keluar record by its ID",
  *     @OA\Parameter(
  *         name="id",

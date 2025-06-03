@@ -14,8 +14,8 @@ class Transaksi_masukController extends Controller
      *     path="/transaksi-masuk",
      *     tags={"Transaksi Masuk"},
      *     operationId="listTransaksiMasuk",
-     *     summary="List of Transaksi Masuk",
      *     security={{"bearerAuth":{}}},
+     *     summary="List of Transaksi Masuk",
      *     description="Retrieve a list of transaksi masuk",
      *     @OA\Response(
      *         response=200,
@@ -25,7 +25,7 @@ class Transaksi_masukController extends Controller
      *                 "success": true,
      *                 "message": "Successfully retrieved transaksi masuk",
      *                 "data": {
-     *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_beli": 100000}
      *                 }
      *             }
      *         )
@@ -64,7 +64,7 @@ class Transaksi_masukController extends Controller
  *                 "success": true,
  *                 "message": "Transaksi Masuk found",
  *                 "data": {
- *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+ *                     {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_beli": 100000}
  *                 }
  *             }
  *         )
@@ -121,7 +121,7 @@ public function searchByTanggal(Request $request)
  *             example={
  *                 "success": true,
  *                 "message": "Transaksi Masuk found",
- *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+ *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_beli": 100000}
  *             }
  *         )
  *     ),
@@ -169,12 +169,12 @@ public function show($id)
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"barang_id","supplier_id","tanggal","jumlah","harga_jual"},
+     *             required={"barang_id","supplier_id","tanggal","jumlah","harga_beli"},
      *             @OA\Property(property="barang_id", type="integer", example=2),
      *             @OA\Property(property="supplier_id", type="integer", example=1),
      *             @OA\Property(property="tanggal", type="string", format="date", example="2024-04-30"),
      *             @OA\Property(property="jumlah", type="integer", example=5),
-     *             @OA\Property(property="harga_jual", type="number", example=100000)
+     *             @OA\Property(property="harga_beli", type="number", example=100000)
      *         )
      *     ),
      *     @OA\Response(
@@ -184,7 +184,7 @@ public function show($id)
      *             example={
      *                 "success": true,
      *                 "message": "Transaksi Masuk created successfully",
-     *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_jual": 100000}
+     *                 "data": {"id": 1, "barang_id": 2, "supplier_id": 1, "tanggal": "2024-04-30", "jumlah": 5, "harga_beli": 100000}
      *             }
      *         )
      *     )
@@ -221,7 +221,7 @@ public function show($id)
      *             @OA\Property(property="supplier_id", type="integer", example=2),
      *             @OA\Property(property="tanggal", type="string", format="date", example="2024-05-01"),
      *             @OA\Property(property="jumlah", type="integer", example=10),
-     *             @OA\Property(property="harga_jual", type="number", example=120000)
+     *             @OA\Property(property="harga_beli", type="number", example=120000)
      *         )
      *     ),
      *     @OA\Response(
@@ -231,7 +231,7 @@ public function show($id)
      *             example={
      *                 "success": true,
      *                 "message": "Transaksi Masuk updated successfully",
-     *                 "data": {"id": 1, "barang_id": 3, "supplier_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_jual": 120000}
+     *                 "data": {"id": 1, "barang_id": 3, "supplier_id": 2, "tanggal": "2024-05-01", "jumlah": 10, "harga_beli": 120000}
      *             }
      *         )
      *     )

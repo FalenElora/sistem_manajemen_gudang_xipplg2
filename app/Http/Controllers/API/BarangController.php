@@ -5,33 +5,78 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BarangController extends Controller
 {
-    /**
-     * @OA\Get(
-     *     path="/barang",
-     *     tags={"Barang"},
-     *     operationId="listBarang",
-     *     summary="List of Barang",
-     *     description="Retrieve a list of barang",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             example={
-     *                 "success": true,
-     *                 "message": "Successfully retrieved barang",
-     *                 "data": {
-     *                     {"id": 1, "nama": "Mouse", "kategori_id": 2, "harga": 50000, "jumlah": 10}
-     *                 }
-     *             }
-     *         )
-     *     )
-     * )
-     */
-    public function index()
+/**
+ * @OA\Get(
+ *     path="/barang",
+ *     tags={"Barang"},
+ *     operationId="listOrSearchBarang",
+ *     summary="List or search Barang by name",
+ *     description="Retrieve all barang or filter barang by partial match on 'nama' using query string",
+ *     @OA\Parameter(
+ *         name="nama",
+ *         in="query",
+ *         required=false,
+ *         description="Optional. Partial or full name of the barang to search for",
+ *         @OA\Schema(
+ *             type="string",
+ *             example="mouse"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="List of barang or search result",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true),
+ *             @OA\Property(property="message", type="string", example="Successfully retrieved barang"),
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="array",
+ *                 @OA\Items(
+ *                     @OA\Property(property="id", type="integer", example=1),
+ *                     @OA\Property(property="nama", type="string", example="Mouse Logitech"),
+ *                     @OA\Property(property="kategori_id", type="integer", example=2),
+ *                     @OA\Property(property="harga", type="number", format="float", example=50000),
+ *                     @OA\Property(property="jumlah", type="integer", example=10)
+ *                 )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="No matching barang found",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="No matching barang found")
+ *         )
+ *     )
+ * )
+ */
+    public function index(Request $request)
     {
+        $nama = $request->query('nama');
+
+        if ($nama) {
+            $barang = Barang::where('nama', 'LIKE', '%' . $nama . '%')->get();
+
+            if ($barang->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No matching barang found',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Search results',
+                'data' => $barang
+            ]);
+        }
+
         $barang = Barang::all();
         return response()->json([
             'success' => true,
@@ -39,6 +84,7 @@ class BarangController extends Controller
             'data' => $barang
         ]);
     }
+
         /**
      * @OA\Get(
      *     path="/barang/{id}",
@@ -148,72 +194,8 @@ public function getByKategori($kategori_id)
         'data' => $barang
     ]);
 }
-/**
- * @OA\Get(
- *     path="/barang/search",
- *     tags={"Barang"},
- *     operationId="searchBarangByName",
- *     summary="Search barang by name",
- *     description="Retrieve a list of barang based on a partial match of the name",
- *     @OA\Parameter(
- *         name="nama",
- *         in="query",
- *         required=true,
- *         description="Nama barang yang ingin dicari",
- *         @OA\Schema(type="string", example="mouse")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Barang search result",
- *         @OA\JsonContent(
- *             example={
- *                 "success": true,
- *                 "message": "Search results",
- *                 "data": {
- *                     {"id": 1, "nama": "Mouse Logitech", "kategori_id": 2, "harga": 50000, "jumlah": 10},
- *                     {"id": 2, "nama": "Mousepad", "kategori_id": 3, "harga": 15000, "jumlah": 5}
- *                 }
- *             }
- *         )
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="No matching barang found",
- *         @OA\JsonContent(
- *             example={
- *                 "success": false,
- *                 "message": "No matching barang found"
- *             }
- *         )
- *     )
- * )
- */
-public function searchByName(Request $request)
-{
-    $nama = $request->query('nama');
 
-    if (!$nama) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Nama parameter is required'
-        ], 400);
-    }
 
-    $barang = Barang::where('nama', 'LIKE', '%' . $nama . '%')->get();
-
-    if ($barang->isEmpty()) {
-        return response()->json([
-            'success' => false,
-            'message' => 'No matching barang found'
-        ], 404);
-    }
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Search results',
-        'data' => $barang
-    ]);
-}
 /**
  * @OA\Get(
  *     path="/barang/stok/kurang-dari-100",

@@ -46,6 +46,8 @@ use OpenAPI\Attributes as OA;
  * )
  */
 
-abstract class Controller {
-    
+
+abstract class Controller extends BaseController
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
